@@ -1,0 +1,30 @@
+<!--index.wxml-->
+
+<loadmore class="loadmore" show="{{_loading}}" type="{{isEnd?'loading':'end'}}" loading-text="努力加载中~" end-text="我是有底线的...(*￣０￣)ノ" >
+  <view slot="content">
+      <view class="container">
+
+  <view class="header">
+    <l-btn class="add" bind:lintap="showForm">
+      添加信条
+    </l-btn>
+    <image class="l-like" src="{{g_like}}" />
+  </view>
+
+ <view class="item-Body">
+  <view wx:for="{{items}}" wx:key="{{items._id}}" wx:if="{{!(items=='')}}">
+    <v-item lock="items[index].lock" _id="{{items[index]._id}}" title="{{items[index].title}}" 
+    time="{{items[index].update_time}}" lover="{{items[index].lover}}" like="{{items[index].isLike}}"></v-item>
+  </view>
+
+  <view class="no-item" wx:if="{{items==''}}">
+    <text>暂无信条，请先添加你对别人的承诺吧(。・∀・)ノ</text>
+  </view>
+ </view>
+
+  <v-addItem state="{{showF}}" bind:clickAdd="theLatest"></v-addItem>
+
+
+</view>
+  </view>
+</loadmore>

@@ -1,0 +1,17 @@
+<!--components/addItem/index.wxml-->
+<l-message />
+<l-popup show="{{_state}}" >
+<view class="form">
+<text class="form-title">自己的承诺要履行哦(～￣▽￣)～
+</text>
+  <view class="form-main">
+    <l-input label="信条标题" placeholder="这里写你的信条" required="{{true}}"  clear="{{true}}" bind:linblur="getTitle" />
+    <l-input label="标签" placeholder="这里写给谁的信条" required="{{true}}"  clear="{{true}}" bind:linblur="getlover" />
+    <view class="form-btn">
+      <l-btn class="add" type="warning"  bind:lintap="unForm" >我后悔了</l-btn>
+      <l-btn class="add" type="success" bind:lintap="clickAdd" >添加信条</l-btn>
+    </view>
+  </view>
+  </view>
+
+</l-popup>

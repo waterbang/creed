@@ -1,0 +1,30 @@
+<!--components/item/index.wxml-->
+
+<view class="item">
+  <l-slide-view height="140" width="750" slide-width="340" >
+    <view slot="left" class="left">
+      <view class='left-con'>
+        <view class='left-title'>
+          <text class="left-main">{{title}}</text>
+          <text class='left-time'>{{time}}</text>
+        </view>
+        <text decode="true" class='left-by'>by&nbsp;{{lover}}</text>
+      </view>
+    </view>
+    
+    <view slot="right" class="right">
+      <view class="right-state" bind:tap="isLike">
+       <image class="right-img" src="http://qyimg.waterbang.top/aixin.svg" />
+        <text> 喜欢</text>
+      </view>
+      <view class="right-state" bind:tap="update">
+         <image class="right-img" src="http://qyimg.waterbang.top/bianji.svg" />
+        <text>修改</text>
+     </view>
+      <view class="right-state"  bind:tap="send">
+     <image class="right-img" src="http://qyimg.waterbang.top/fenxiang.svg" />
+        <text>发送</text>
+      </view>
+    </view>
+  </l-slide-view>
+</view>

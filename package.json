@@ -1,0 +1,16 @@
+{
+  "name": "xintiao",
+  "dependencies": {
+    "lin-ui": "^0.6.6",
+    "miniprogram-sm-crypto": "^0.1.0"
+  },
+  "version": "0.0.1",
+  "description": "Creed applet",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "waterbang",
+  "license": "ISC"
+}

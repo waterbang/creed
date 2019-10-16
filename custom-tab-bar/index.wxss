@@ -1,0 +1,105 @@
+/* tabBar总体 */
+
+.tab-bar {
+   position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: white;
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 背景图片 */
+
+.tab-bar-bg {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 70px;
+}
+
+/* 背景一条线 */
+
+.tab-bar-bg-view {
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.33);
+  position: absolute;
+  top: 17px;
+  z-index: -1;
+}
+
+/* tabBar内容快 */
+
+.tab-bar-index {
+  display: flex;
+  flex: 1;
+  font-size: 30rpx;
+  height: 50px;
+  margin-top: 20px;
+  z-index: 1;
+  background-color: #fff;
+}
+
+/* tarBar添加发布单独内容快 */
+
+.tab-bar-index-add {
+  display: flex;
+  flex: 1;
+  font-size: 30rpx;
+  z-index: 1;
+  height: 70px;
+}
+
+/* 图标字体结合内容快 */
+
+.tab-bar-icon {
+  width: 100%;
+  height: 45px;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 图标字体结合内容快添加发布单独设置 */
+
+.tab-bar-icon_add {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 内容快图片 */
+
+.tab-bar-img {
+  width: 25px;
+  height: 25px;
+  margin: 0 auto;
+}
+
+/* 内容快添加发布单独图片设置 */
+
+.tab-bar-img-add {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+}
+
+/* 内容快挤位置 */
+
+.tab-bar-tmp {
+  width: 100%;
+  height: 3.5px;
+}
+
+/* 内容快文字 */
+
+.tab-bar-text {
+  width: 40px;
+  text-align: center;
+  font-size: 12px;
+  margin: 0 auto;
+}

@@ -1,0 +1,80 @@
+/* components/item/index.wxss */
+
+.item {
+  width: 100%;
+  border: 1px solid #f5f5f5;
+  margin-top: 10rpx;
+  -webkit-box-shadow: 0px 3px 3px #c8c8c8;
+  -moz-box-shadow: 0px 3px 3px #c8c8c8;
+  box-shadow: 0px 3px 3px #c8c8c8;
+}
+
+.l-slide-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.left-con {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 150rpx;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left-main {
+  width:300rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.left-time {
+  margin-top: 5rpx;
+  font-weight: 100;
+   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.left-title {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.left-by{
+  max-width: 250rpx;
+  margin-right: 70rpx;
+   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.right {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 150rpx;
+  align-items: center;
+  justify-content: space-around;
+}
+.right-state{
+display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content:center;
+}
+.right-img{
+  width: 45rpx;
+  height: 45rpx;
+}
+
+
+
+
