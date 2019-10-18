@@ -1,0 +1,3 @@
+<!--pages/add/add.wxml-->
+<v-addItem state="{{showF}}" bind:clickAdd="theLatest"></v-addItem>
+<tabbar tabbar="{{tabbar}}" current="" ></tabbar>

@@ -1,2 +1,4 @@
 <!--pages/home/home.wxml-->
-<text>pages/home/home.wxml</text>
+<view>我的页面
+</view>
+<tabbar tabbar="{{tabbar}}"></tabbar>

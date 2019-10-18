@@ -5,7 +5,7 @@ import {
   Storage
 } from '../../utils/storage.js'
 
-
+const app = getApp();
 const itemModel = new ItemModel()
 const storage = new Storage()
 Page({
@@ -13,11 +13,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    tabbar:{},
     items: [],
     _loading: false,
     g_like: "http://qyimg.waterbang.top/meh.gif",
     is_like: false,
-    showF: false,
     pageIndex: 0,
     isEnd: true,
     cache: false
@@ -31,10 +31,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    app.editTabbar();
     this.showNewItem()
     this.data.pageIndex = 0
   },
-
 
   /**
    * 打开添加信条
