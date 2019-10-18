@@ -1,5 +1,10 @@
 // pages/home/home.js
+import {
+  Storage
+} from '../../utils/storage.js'
+
 const app = getApp();
+const storage = new Storage()
 Page({
 
   /**
@@ -7,6 +12,12 @@ Page({
    */
   data: {
     tabbar: {},
+  },
+/**
+ * 发布list更新消息
+ */
+  addCache(){
+    app.globalData.listState = true
   },
 
   /**

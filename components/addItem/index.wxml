@@ -1,17 +1,30 @@
 <!--components/addItem/index.wxml-->
-<l-message />
+<l-message l-class="message" />
 <l-popup show="{{_state}}" >
 <view class="form">
 <text class="form-title">自己的承诺要履行哦(～￣▽￣)～
 </text>
   <view class="form-main">
-    <l-input label="信条标题" placeholder="这里写你的信条" required="{{true}}"  clear="{{true}}" bind:linblur="getTitle" />
-    <l-input label="标签" placeholder="这里写给谁的信条" required="{{true}}"  clear="{{true}}" bind:linblur="getlover" />
-    <view class="form-btn">
-      <l-btn class="add" type="warning"  bind:lintap="unForm" >我后悔了</l-btn>
+    <l-input label="信条标题" placeholder="这里写你的信条" required="{{true}}" value="{{title}}"  clear="{{true}}" bind:linblur="getTitle" />
+    <l-input label="标签" placeholder="这里写给谁的信条" required="{{true}}" value="{{lover}}" clear="{{true}}" bind:linblur="getlover" />
+    <view wx:if="{{!isUpdate}}" class="form-btn" >
+      <l-btn class="add" type="warning"  bind:lintap="ifDraft" >我后悔了</l-btn>
       <l-btn class="add" type="success" bind:lintap="clickAdd" >添加信条</l-btn>
+    </view>
+     <view wx:if="{{isUpdate}}" class="form-btn">
+      <l-btn class="add" type="warning"  bind:lintap="unForm" >我按错了</l-btn>
+      <l-btn class="add" type="success" bind:lintap="upData"  >修改信条</l-btn>
     </view>
   </view>
   </view>
 
+</l-popup>
+<l-popup  show="{{draft}}" content-align="bottom"z-index="1000"> 
+<view class="draft">
+<view class="draft-text">是否存为草稿？=￣ω￣=</view>
+ <view class="draft-main">
+ <l-btn class="add" type="warning"  bind:lintap="unWindow" >拒绝</l-btn>
+  <l-btn class="add" type="success" bind:lintap="addDraft" >同意</l-btn>
+  </view>
+  </view>
 </l-popup>

@@ -1,10 +1,11 @@
 {
   "navigationBarTitleText": "我的信条",
   "usingComponents": {
+    "v-header": "../../components/header/index",
     "v-item":"../../components/item/index",
-   "v-addItem": "../../components/addItem/index",
    "loadmore":"../../miniprogram_npm/lin-ui/loadmore/index",
     "tabbar": "../../tabbarComponent/tabbar"
   },
   "enablePullDownRefresh": true
+
 }

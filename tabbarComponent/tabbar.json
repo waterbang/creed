@@ -1,4 +1,7 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "v-addItem": "../../components/addItem/index"
+  },
+  "disableScroll": true
 }

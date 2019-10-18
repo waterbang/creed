@@ -1,4 +1,4 @@
 <!--pages/home/home.wxml-->
 <view>我的页面
 </view>
-<tabbar tabbar="{{tabbar}}"></tabbar>
+<tabbar tabbar="{{tabbar}}" bind:formList="addCache" ></tabbar>

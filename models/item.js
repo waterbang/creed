@@ -17,7 +17,6 @@ const openid = userModel.getOpenid();
 class ItemModel {
   constructor() {}
 
-
   /**
    * 下拉刷新
    */
@@ -58,7 +57,9 @@ class ItemModel {
       })
 
   }
-
+/**
+ * 显示最新的数据
+ */
   theLatest(){
     return db.collection('item').limit(1).where({
       _openid: openid,
@@ -73,13 +74,16 @@ class ItemModel {
 
   }
 
-  addItem(title, lover) {
+
+
+  addItem(title, lover,draft) {
     return db.collection('item').add({
       data: {
         title: title,
         isLike: false,
         lover: lover,
         flag: AES.encryptFlag(),
+        draft: draft||false,
         lock: false,
         update_time: new Date().toLocaleString(),
         create_time: db.serverDate(),
@@ -88,6 +92,23 @@ class ItemModel {
     })
 
   }
+
+  upItem(_id,title,lover){
+    return db.collection('item').doc(_id)
+      .update({
+        data: {
+          title: title,
+          lover: lover
+        }
+      })
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return err
+      })
+  }
+
 
 
 }

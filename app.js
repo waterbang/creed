@@ -12,7 +12,7 @@ App({
  
   globalData: {
     userInfo: null,
-    openid:null
+  
   },
   /**
    * 初始化数据库
@@ -29,6 +29,7 @@ App({
     wx.getSystemInfo({
       success: function (res) {
         t.globalData.systemInfo = res;
+        t.globalData.listState= false
       }
     });
   },
@@ -48,7 +49,6 @@ App({
       tabbar.list[i].selected = false;
       (tabbar.list[i].pagePath == pagePath) && (tabbar.list[i].selected = true);
     }
-    console.log(tabbar)
     _this.setData({
       tabbar: tabbar
     });

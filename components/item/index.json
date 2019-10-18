@@ -1,6 +1,8 @@
 {
   "component": true,
   "usingComponents": {
-    "l-slide-view":"../../miniprogram_npm/lin-ui/slide-view/index"
+    "l-slide-view":"../../miniprogram_npm/lin-ui/slide-view/index",
+    "l-message": "../../miniprogram_npm/lin-ui/message/index",
+    "v-addItem": "../addItem/index"
   }
 }

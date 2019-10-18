@@ -1,5 +1,14 @@
 // tabBarComponent/tabBar.js
+import {
+  ItemModel
+} from '../models/item.js'
+import {
+  Storage
+} from '../utils/storage.js'
+
 const app = getApp();
+const itemModel = new ItemModel()
+const storage = new Storage()
 Component({
   /**
    * 组件的属性列表
@@ -47,6 +56,20 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    /**
+ * 打开添加信条
+ */
+    showForm(event) {
+      this.setData({
+        showF: !this.data.showF
+      })
+    },
 
+    /**
+     * 把信息给list
+     */
+    informList(){
+      this.triggerEvent('formList')
+    }
   }
 })

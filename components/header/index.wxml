@@ -1,0 +1,4 @@
+<!--components/header/header.wxml-->
+   <view class="header">
+        <image class="l-like" src="{{g_like}}" />
+      </view>

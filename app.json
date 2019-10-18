@@ -1,13 +1,12 @@
 {
   "pages": [
     "pages/list/list",
-    "pages/home/home",
-    "pages/add/add"
+    "pages/home/home" 
   ],
   "window": {
-    "backgroundColor": "#fffff0",
+    "backgroundColor": "#ffffff",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
   },
@@ -18,12 +17,6 @@
         "iconPath": "tabbarComponent/icon/icon_home.png",
         "selectedIconPath": "tabbarComponent/icon/icon_home_HL.png",
         "text": "信列"
-      },
-      {
-        "pagePath": "pages/add/add",
-        "iconPath": "tabbarComponent/icon/icon_release.png",
-        "isSpecial": true,
-        "text": "添加"
       },
       {
         "pagePath": "pages/home/home",

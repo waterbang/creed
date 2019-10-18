@@ -1,5 +1,5 @@
 <!--components/item/index.wxml-->
-
+<l-message l-class="message" />
 <view class="item">
   <l-slide-view height="140" width="750" slide-width="340" >
     <view slot="left" class="left">
@@ -14,11 +14,11 @@
     
     <view slot="right" class="right">
       <view class="right-state" bind:tap="isLike">
-       <image class="right-img" src="http://qyimg.waterbang.top/aixin.svg" />
+       <image class="right-img" src="{{like?clickLike:notClickLike}}" />
         <text> 喜欢</text>
       </view>
       <view class="right-state" bind:tap="update">
-         <image class="right-img" src="http://qyimg.waterbang.top/bianji.svg" />
+         <image class="right-img" src="{{_lock?diDataImgUrl:dataImgUrl}}" />
         <text>修改</text>
      </view>
       <view class="right-state"  bind:tap="send">
@@ -28,3 +28,4 @@
     </view>
   </l-slide-view>
 </view>
+<v-addItem isUpdate="{{true}}" _id="{{_id}}" title="{{title}}" lover="{{lover}}"  state="{{showF}}" bind:upINData="upInThis" ></v-addItem>

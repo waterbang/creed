@@ -16,11 +16,11 @@ Page({
     tabbar:{},
     items: [],
     _loading: false,
-    g_like: "http://qyimg.waterbang.top/meh.gif",
     is_like: false,
-    pageIndex: 0,
-    isEnd: true,
-    cache: false
+    pageIndex: 0,//当前索引叶数
+    isEnd: true,//是否还有数据
+    cache: false,//
+    
   },
 
   isLike(e) {
@@ -32,18 +32,14 @@ Page({
    */
   onLoad: function(options) {
     app.editTabbar();
-    this.showNewItem()
+
+
+    this.showNewItem()//显示前10
+
     this.data.pageIndex = 0
   },
 
-  /**
-   * 打开添加信条
-   */
-  showForm(event) {
-    this.setData({
-      showF: !this.data.showF
-    })
-  },
+
 
   /**
    * 下拉刷新
@@ -94,6 +90,7 @@ Page({
       data = storage.all('item')
     } else {
       data = await itemModel.showItem()
+      storage.add('item',data)
     }
     if (data) {
       this.setData({
@@ -117,10 +114,22 @@ Page({
         items: this.data.items
       })
     }
-    console.log(this.data.items)
     storage.add('item', this.data.items)
 
   },
+/**
+ * 监听list更新消息
+ */
+  monitorInfo(){
+    let state = app.globalData.listState;
+   
+    if (state){
+      this.theLatest()
+      app.globalData.listInfo=false;
+    }
+    return
+  },
+
 
   /**
    * 是否可加载
@@ -161,6 +170,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    this.monitorInfo()//监听list更新
 
   },
 
