@@ -2,80 +2,81 @@ import {
   db
 } from '../utils/database.js'
 
+import {
+  Storage
+} from '../utils/storage.js'
+const storage = new Storage();
 class UserModel {
   constructor(){
-   
+    this._openid = 'openid',
+    this._lover = 'lover'
   }
 
   /**
    * 从缓存获取
    */
   getOpenid() {
-    if(!this._getOpenid()){
+    if (!storage.all(this._openid)){
       wx.cloud.callFunction({
         name: 'getOpenid',
         }).then(res =>{
           let id = res.result.openid;
-          this._setOpenid(id)//存入缓存
-          this.storeOpenID(id)//存入数据库
+          storage.add(this._openid,id)//存入缓存
           return id;
       }).catch(err =>{
         throw new Error(err)
       })
       
     }else{
-      return this._getOpenid()
+      return storage.all(this._openid)
     }
-    
-
   }
 
   /**
-   * 存id到数据库
-   */
- async storeOpenID(_id){
-   let haveID = await this.existOpenID(_id)
-   if(haveID){
-     return true
-   }
-    db.collection('users').add({
-      data: {
-        userID: _id
-      }
+ * 获取用户匹配码
+ */
+  getMatchTheCode() {
+    return db.collection('users').where({
+      _openid: this.getOpenid() // 填入当前用户 openid
     })
-  }
-
-  /**
-   * 查找id是否存在
-   */
-  existOpenID(_id){
-   return db.collection('users').where({
-     userID: _id // 填入当前用户 openid
-    })
-    .get()
-    .then(res => {
-      if(res.data=[]){
+      .field({
+        lover: true
+      })
+      .limit(1)
+      .get()
+      .then(res => {
+        return res.data[0].lover;
+      })
+      .catch(err => {
+        console.log("err" + err)
         return false
-      }else{
-        return true
-      }
-    })
-     .catch(err => {
-       return false
-     })
+      })
   }
 
-  _setOpenid(id){
-    wx.setStorageSync(this._fullkey('openid'), id)
+  /**
+   * 设置用户匹配码
+   */
+  setMatchTheCode(lover) {
+    if (storage.all(this._lover)) {
+      return torage.all(this._lover)
+    }
+    return db.collection('users')
+      .add({
+        data:{
+          lover: lover,
+          createTime: new Date().toLocaleString() // 填入当前用户 openid
+        }
+      })
+      .then(res => {
+        storage.add(this._lover, lover)
+          return res
+      })
+      .catch(err => {
+        return err
+      })
   }
 
-  _getOpenid(){
-    return wx.getStorageSync(this._fullkey('openid'))
-  }
 
-  _fullkey(key){
-    return "water-" + key
-  }
 
 }
 

@@ -1,0 +1,8 @@
+/* pages/help/help.wxss */
+.help-text{
+  margin: 50rpx 0;
+  display: flex;
+  flex-direction: column;
+   align-items: center;
+  justify-content: center;
+}

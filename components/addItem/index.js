@@ -1,19 +1,22 @@
 // components/addItem/index.js
 import {
-  ItemModel
-} from '../../models/item.js'
-
-
-const itemModel = new ItemModel()
+  Storage
+} from '../../utils/storage.js'
+import {
+  MyItemModel
+} from '../../models/myItem.js'
+const myItemModel = new MyItemModel()
+const storage = new Storage()
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
     title: {
-      type: String,
+      type: String
     },
-    lover: {
+    lover: String,
+    _id: {
       type: String
     },
     state: {
@@ -27,13 +30,10 @@ Component({
       type: Boolean,
       value: false
     },
-    _id: {
-      type: String
-    },
-    anim :{
+    anim: {
       type: String,
-      value:'center'
-    }
+      value: 'center'
+    },
   },
 
   /**
@@ -72,11 +72,11 @@ Component({
      */
     addDraft() {
 
-      if (this.verifyIsNull()) { //验证是否为空
+      if (this.verifyIsNull(false)) { //验证是否为空
         this.unWindow()
         return
       }
-      itemModel.addItem(this.data.title, this.data.lover, true)
+      myItemModel.addItem(this.data.title, '')
         .then(res => {
           this.unWindow()
           this._showSuccess("添加成功！")
@@ -92,12 +92,11 @@ Component({
      * 添加数据
      */
     clickAdd() {
-      if (this.verifyIsNull()) { //验证是否为空
-        this.unWindow()
+      if (this.verifyIsNull(true)) { //验证是否为空
         return
       }
 
-      itemModel.addItem(this.data.title, this.data.lover)
+      myItemModel.addItem(this.data.title, this.data.lover)
         .then(res => {
           this._showSuccess("添加成功！")
           this.unWindow()
@@ -112,20 +111,19 @@ Component({
     /**
      * 修改数据
      */
-    upData() {
-      itemModel.upItem(this.data._id, this.data.title, this.data.lover)
-        .then(res => {
-          this._showSuccess("修改成功！")
-          this.unWindow()
-          this.triggerEvent('upINData', {
-            title: this.data.title,
-            lover: this.data.lover
-          })
+    async upData() {
+      let aitItem = await myItemModel.upItem(this.data._id, this.data.title)
+ 
+      if (aitItem) {
+        this._showSuccess("修改成功！")
+        this.unWindow()
+        this.triggerEvent('upINData', {
+          title: this.data.title
         })
-        .catch(err => {
-          this._showError("修改失败！")
-          throw new Error(err)
-        })
+      } else {
+        this._showError("修改失败！")
+      }
+
     },
     /**
      * 关闭所有弹窗
@@ -143,22 +141,25 @@ Component({
     /**
      * 验证是否为空
      */
-    verifyIsNull() {
+    verifyIsNull(tag) {
       if (!this.data.title) {
         this._showError('未填入信条内容！')
 
         return true
       }
-
-      if (!this.data.lover) {
-        this._showError('未填入信条给予人！')
-        return true
+      if (tag) {
+        if (!this.data.lover) {
+          this._showError('未填入信条给予人！')
+          return true
+        }
       }
+
+      return false
+
     },
 
     getTitle(e) {
       this.data.title = e.detail.value;
-
     },
     getlover(e) {
       this.data.lover = e.detail.value;

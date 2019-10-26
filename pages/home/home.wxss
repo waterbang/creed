@@ -1,30 +1,101 @@
 /* pages/home/home.wxss */
-
 .header {
+  padding-top: 40rpx;
   width: 100%;
-  height: 400rpx;
+  height: 350rpx;
+  -webkit-box-shadow: inset 0 2px rgba(0,0,0,0.075);
+  -moz-box-shadow: inset 0 2px rgba(0,0,0,0.075);
+  box-shadow: inset 0 2px rgba(0,0,0,0.075);
+  border-bottom: 1px solid #c8c8c8;
+  border-radius: 0 0 60px 60px;
+  background: white;
+  -webkit-transition: height 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  -o-transition: height 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transition: height 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.header-click {
+    padding-top: 40rpx;
   -webkit-box-shadow: 2px 3px 5px #c8c8c8;
   -moz-box-shadow: 2px 3px 5px #c8c8c8;
   box-shadow: 2px 3px 5px #c8c8c8;
   border-bottom: 1px solid #c8c8c8;
   border-radius: 0 0 60px 60px;
-  background:white;
-  transition: 2s;
-}
-
-.header:hover {
-   -webkit-transition:  all 2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  -o-transition: all 2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  transition: all 2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  height: 750rpx;
+  background: white;
+  width: 100%;
+  -webkit-transition: height 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  -o-transition: height 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transition: height 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  height: 450rpx;
 }
 
 .avatar {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
+}
+
+.avatar-X {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  overflow: hidden;
+  animation: 0.3s 0.5s avatarCome linear 1 forwards normal;
+}
+
+.avatar-back {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  overflow: hidden;
+  transform: translateX(-30%); /**左移元素**/
+  animation: 0.3s 0.5s avatarBack linear 1 forwards normal;
+}
+
+@keyframes avatarCome {
+  0% {
+    transform: translateX(0); /**左移元素**/
+  }
+
+  25% {
+    transform: translateX(-15%); /**左移元素**/
+  }
+
+  50% {
+    transform: translateX(-20%); /**左移元素**/
+  }
+
+  75% {
+    transform: translateX(-25%); /**左移元素**/
+  }
+
+  100% {
+    transform: translateX(-30%); /**左移元素**/
+  }
+}
+
+@keyframes avatarBack {
+  0% {
+    transform: translateX(-30%); /**左移元素**/
+  }
+
+  25% {
+    transform: translateX(-25%); /**左移元素**/
+  }
+
+  50% {
+    transform: translateX(-20%); /**左移元素**/
+  }
+
+  75% {
+    transform: translateX(-15%); /**左移元素**/
+  }
+
+  100% {
+    transform: translateX(0); /**左移元素**/
+  }
 }
 
 .avatar-text {
@@ -36,14 +107,102 @@
   align-items: center;
 }
 
-@keyframes slidup {
-  from {
-    transform: translateY(100%);
+.avatar-text-come {
+  font-size: 15px;
+  font-weight: 100;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  animation: 0.2s 0.5s avatarTextCome linear 1 forwards normal;
+}
+
+.avatar-text-back {
+  font-size: 15px;
+  font-weight: 100;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-160rpx);
+  animation:0.2s 0.5s avatarTextBack linear 1 forwards normal;
+}
+
+@keyframes avatarTextCome {
+  0% {
+    transform: translateY(0);
   }
 
-  to {
-    transform: translateY(0%);
+  25% {
+    transform: translateY(-40rpx);
   }
+
+  50% {
+    transform: translateY(-80rpx);
+  }
+
+  75% {
+    transform: translateY(-120rpx);
+  }
+
+  100% {
+    transform: translateY(-160rpx);
+  }
+}
+
+@keyframes avatarTextBack {
+  0% {
+    transform: translateY(-160rpx); 
+  }
+
+  25% {
+    transform: translateY(-120rpx); 
+  }
+
+  50% {
+    transform: translateY(-80rpx); 
+  }
+
+  75% {
+    transform: translateY(-40rpx); 
+  }
+
+  100% {
+    transform: translateY(0); 
+  }
+}
+
+.flag-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.header-grid{
+  height: 200rpx;
+  overflow: hidden;
+-webkit-transition: height 2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  -o-transition: height 2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transition: height 2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+.header-grid-show{
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  -o-transition: height 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transition: height 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.grid{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.grid-item{
+  margin-top: 20rpx;
 }
 
 .body {

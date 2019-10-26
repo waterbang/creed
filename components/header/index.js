@@ -11,7 +11,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    g_like: "./images/paperplane.gif",
+    g_like: "http://qyimg.waterbang.top/paperplane.gif",
   },
 
   /**

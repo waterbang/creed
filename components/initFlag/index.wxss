@@ -1,0 +1,34 @@
+/* components/initFlag/index.wxss */
+.flag{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:center;
+  width: 100%;
+  min-height: 1750rpx;
+  background-color: #ffffff;
+}
+
+.flag-text{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:center;
+  margin-bottom: 100rpx;
+}
+
+.flag-text text:nth-child(2){
+  margin-top: 10rpx;
+  font-size: 14px;
+  font-weight: 100;
+  color:cadetblue;
+}
+
+.flag-btn{
+  margin-top: 40rpx;
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  justify-content:space-around;
+
+}

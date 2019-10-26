@@ -1,13 +1,11 @@
 // tabBarComponent/tabBar.js
-import {
-  ItemModel
-} from '../models/item.js'
+
+
 import {
   Storage
 } from '../utils/storage.js'
-
 const app = getApp();
-const itemModel = new ItemModel()
+
 const storage = new Storage()
 Component({
   /**

@@ -10,8 +10,61 @@ const openid = userModel.getOpenid();
 class ItemState {
   constructor() {}
 
+  /**
+   * 提醒对方
+   */
+  warnState(_id, warn=true) {
+    return db.collection('item').doc(_id)
+      .update({
+        data: {
+          warn: warn
+        }
+      })
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return err
+      })
+  }
 
 
+/**
+ * 更改状态
+ */
+upItemState(_id,lock){
+  return db.collection('item').doc(_id)
+    .update({
+      data: {
+        lock: lock,
+        warn:false
+      }
+    })
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      return err
+    })
+}
+/**
+ * 发送
+ */
+  sendItem(_id, lover) {
+    return db.collection('item').doc(_id)
+      .update({
+        data: {
+          lover: lover,
+          lock:1
+        }
+      })
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return err
+      })
+  }
 /**
  * 更新like状态
  */
@@ -29,9 +82,6 @@ upLike(_id, state) {
       return err
     })
 }
-/**
- * 获取like状态
- */
 
 }
 

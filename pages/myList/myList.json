@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "我的信条",
+  "usingComponents": {
+    "v-header": "../../components/header/index",
+    "v-item": "../../components/item/index",
+    "loadmore": "../../miniprogram_npm/lin-ui/loadmore/index",
+  "l-message": "../../miniprogram_npm/lin-ui/message/index",
+  "l-popup": "../../miniprogram_npm/lin-ui/popup/index",
+  "l-input": "../../miniprogram_npm/lin-ui/input/index"
+  },
+  "enablePullDownRefresh": true
+}

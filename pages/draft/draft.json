@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "草稿",
+  "usingComponents": {
+    "v-header": "../../components/header/index",
+    "v-item": "../../components/item/index",
+    "loadmore": "../../miniprogram_npm/lin-ui/loadmore/index",
+    "tabbar": "../../tabbarComponent/tabbar",
+    "l-message": "../../miniprogram_npm/lin-ui/message/index",
+      "l-popup": "../../miniprogram_npm/lin-ui/popup/index",
+      "l-input": "../../miniprogram_npm/lin-ui/input/index"
+  },
+  "enablePullDownRefresh": true
+}

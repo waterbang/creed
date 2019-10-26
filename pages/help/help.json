@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "帮助",
+  "usingComponents": {
+    "l-message": "../../miniprogram_npm/lin-ui/message/index",
+    "l-icon": "../../miniprogram_npm/lin-ui/icon/index",
+    "l-list": "../../miniprogram_npm/lin-ui/list/index",
+    "l-tag": "../../miniprogram_npm/lin-ui/tag/index"
+  }
+}

@@ -4,8 +4,15 @@ import {
 import {
   Storage
 } from '../../utils/storage.js'
-
+import {
+  ItemState
+} from '../../models/itemState.js'
+import {
+  config
+} from '../../config.js'
 const app = getApp();
+const Item = 'item';
+let stateModel = new ItemState();
 const itemModel = new ItemModel()
 const storage = new Storage()
 Page({
@@ -13,18 +20,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tabbar:{},
+    tabbar: {},
     items: [],
     _loading: false,
-    is_like: false,
-    pageIndex: 0,//当前索引叶数
-    isEnd: true,//是否还有数据
-    cache: false,//
-    
-  },
-
-  isLike(e) {
-    console.log(e)
+    newData: [],
+    pageIndex: 0, //当前索引叶数
+    isEnd: true, //是否还有数据
+    cache: false, //
+    index: 1
   },
 
   /**
@@ -32,29 +35,105 @@ Page({
    */
   onLoad: function(options) {
     app.editTabbar();
+    this.showNewItem() //显示前10
+  },
+  /**
+   * 监听拒绝后移除元素
+   */
+  delectItem(e) {
+    let newItem = this.data.items.splice(e.detail, 1);
+    if (newItem) {
+      this.setData({
+        items: this.data.items
+      })
+      storage.add('item', this.data.items)
+    }
 
-
-    this.showNewItem()//显示前10
-
-    this.data.pageIndex = 0
+    this._showSuccess("您拒绝了这个信条。")
+  },
+  /**
+   * 置顶
+   */
+  stickFn(index){
+   let newItem =  this.data.items.splice(index,1);
+   let shift = this.data.items.unshift(newItem[0]);
+    if(shift){
+      this.setData({
+        items: this.data.items
+      })
+      storage.add(Item, this.data.items)
+      return true
+    }
+    return false
+   
+  },
+  /**
+   * 提醒
+   */
+  async warnFn(index){
+    let warn = await stateModel.warnState(this.data.items[index]._id,true)
+    if(warn){
+      return true
+    }
+    return false
+  },
+  /**
+   * 核销
+   */
+  async cancelFn(index){
+    let warn = await stateModel.upItemState(this.data.items[index]._id, config.ACCOMPLISH)
+    if (warn) {
+      let newItem = this.data.items.splice(index, 1);
+        this.setData({
+          items: this.data.items
+        })
+        storage.add(Item, this.data.items)
+      return true
+    }
+    return false
   },
 
-
-
   /**
-   * 下拉刷新
+   * 监听三个状态
+   */
+  popState(e) {
+    let index = e.detail.index,
+      tag = e.detail.tag;
+  if(tag===1){ //置顶
+    if (this.stickFn(index)){
+      this._showSuccess("置顶成功@~@")
+      return
+    }
+    this._showError("发生错误，请电邮管理员")
+  }
+  if(tag===2){//提醒
+    if (this.warnFn(index)) {
+      this._showSuccess("提醒成功@^@")
+      return
+    }
+    this._showError("发生错误，请电邮管理员")
+  }
+  if(tag===3){//核销
+    if (this.cancelFn(index)) {
+      this._showSuccess("核销成功@v@")
+      return
+    }
+    this._showError("发生错误，请电邮管理员")
+  }
+
+  },
+  /**
+   * 上拉触底
    */
   async pullToRefresh() {
     this._showLoading()
-    if (!this.data.isEnd) {//数据加载是否完成
+    if (!this.data.isEnd) { //数据加载是否完成
       return
     }
-
-    if (storage.all('item')){
+    if (storage.all('item')) {
       this._unEnd()
       return
     }
-
     let lastData = await itemModel.pullRefresh(this.data.pageIndex += 10);
     if (lastData) {
       let newData = this.data.items.concat(lastData)
@@ -90,7 +169,7 @@ Page({
       data = storage.all('item')
     } else {
       data = await itemModel.showItem()
-      storage.add('item',data)
+      storage.add('item', data)
     }
     if (data) {
       this.setData({
@@ -107,9 +186,9 @@ Page({
    * 加载最新一期
    */
   async theLatest() {
-    let latest = await itemModel.theLatest()
+    let latest = await this.getNewData(this.data.items[0])
     if (latest) {
-      let newData = this.data.items.unshift(latest[0])
+      let newData = this.data.items.unshift(latest)
       this.setData({
         items: this.data.items
       })
@@ -117,15 +196,45 @@ Page({
     storage.add('item', this.data.items)
 
   },
-/**
- * 监听list更新消息
- */
-  monitorInfo(){
+  /**
+   * 递归查看有几条新数据
+   */
+  async getNewData(item) {
+    let latest = await itemModel.theLatest(this.data.index)
+    let oldItem, newItem;
+    try {
+      oldItem = item._id;
+      newItem = latest[--this.data.index]._id;
+    } catch (e) {
+      if (!oldItem) {
+        let data = await itemModel.showItem();
+        this.setData({
+          items: data
+        })
+        return;
+      }
+      oldItem == 0
+      newItem = 0
+      this._showSuccess("已经加载完全部最新数据！")
+    }
+    if (newItem !== oldItem) {
+      this.data.newData.unshift(latest[this.data.index])
+      return this.getNewData(latest[this.data.index], ++this.data.index)
+    }
+    this._showSuccess("已经加载完全部最新数据！")
+
+    return this.data.newData[0]
+
+  },
+  /**
+   * 监听list更新消息
+   */
+  monitorInfo() {
     let state = app.globalData.listState;
-   
-    if (state){
-      this.theLatest()
-      app.globalData.listInfo=false;
+
+    if (state) {
+      this._showSuccess("添加成功，请到我的信条里查看")
+      app.globalData.listInfo = false;
     }
     return
   },
@@ -157,7 +266,22 @@ Page({
       isEnd: false
     })
   },
-
+  _showSuccess(content) {
+    wx.lin.showMessage({
+      type: 'success',
+      content: content,
+      duration: 2000,
+      icon: 'success'
+    })
+  },
+  _showError(content) {
+    wx.lin.showMessage({
+      type: 'warning',
+      content: content,
+      duration: 2000,
+      icon: 'warning'
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -170,7 +294,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.monitorInfo()//监听list更新
+    this.monitorInfo() //监听list更新
 
   },
 
@@ -192,8 +316,9 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-
+    this.theLatest()
   },
+
 
   /**
    * 页面上拉触底事件的处理函数

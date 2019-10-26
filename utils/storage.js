@@ -5,16 +5,21 @@ class Storage {
 
   all(key) {
    
-    var keywords = wx.getStorageSync(key)
+    var keywords = wx.getStorageSync(this._fullkey(key))
     return keywords
   }
 
 
   add(key, word) {
-      wx.setStorageSync(key, word)
+    wx.setStorageSync(this._fullkey(key), word)
   }
 
-  
+
+
+  _fullkey(key) {
+    return "water-" + key
+  }
+
 
   _add(key,word) {
     var keywords = this.all(key)

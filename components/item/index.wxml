@@ -1,31 +1,49 @@
 <!--components/item/index.wxml-->
 <l-message l-class="message" />
-<view class="item">
-  <l-slide-view height="140" width="750" slide-width="340" >
+<view class="item" bind:tap="clickDialogState">
+  <l-slide-view height="140" width="750" slide-width="340" disabled="{{my&&_lock!==4}}" auto-close="true" >
     <view slot="left" class="left">
       <view class='left-con'>
         <view class='left-title'>
-          <text class="left-main">{{title}}</text>
-          <text class='left-time'>{{time}}</text>
+          <text class="left-main">{{items.title}}</text>
+          <text class='left-time'>{{items.update_time}}</text>
         </view>
-        <text decode="true" class='left-by'>by&nbsp;{{lover}}</text>
+        <text decode="true" class='left-by'>by&nbsp;{{items.lover}}</text>
       </view>
     </view>
-    
     <view slot="right" class="right">
-      <view class="right-state" bind:tap="isLike">
-       <image class="right-img" src="{{like?clickLike:notClickLike}}" />
-        <text> 喜欢</text>
+      <view class="right-state" bind:tap="stickItem">
+        <image class="right-img" src="{{stick}}" />
+        <text> 置顶</text>
       </view>
-      <view class="right-state" bind:tap="update">
-         <image class="right-img" src="{{_lock?diDataImgUrl:dataImgUrl}}" />
+      <view wx:if="{{my&&_lock===4}}" class="right-state" bind:tap="remind">
+        <image class="right-img" src="{{remindImg}}" />
+        <text>提醒</text>
+      </view>
+      <view wx:else class="right-state" bind:tap="update">
+        <image class="right-img" src="{{_lock!== 3&&_lock !== 2||my?diDataImgUrl:dataImgUrl}}" />
         <text>修改</text>
-     </view>
-      <view class="right-state"  bind:tap="send">
-     <image class="right-img" src="http://qyimg.waterbang.top/fenxiang.svg" />
+      </view>
+      <view wx:if="{{my&&_lock===4}}" class="right-state" bind:tap="cancel">
+        <image class="right-img" src="{{sendImg}}" />
+        <text>核销</text>
+      </view>
+       <view wx:else class="right-state" bind:tap="send">
+        <image class="right-img" src="{{_lock!== 3&&_lock !== 2||my?diSendImgUrl:sendImgUrl}}" />
         <text>发送</text>
       </view>
     </view>
   </l-slide-view>
 </view>
-<v-addItem isUpdate="{{true}}" _id="{{_id}}" title="{{title}}" lover="{{lover}}"  state="{{showF}}" bind:upINData="upInThis" ></v-addItem>
+<l-dialog 
+  show="{{creed}}"
+  type="confirm"     
+  title="是否接收信条"
+  content="点击确定或拒绝，来确定您的想法ヽ(✿ﾟ▽ﾟ)ノ" 
+  confirm-text="接收"
+  cancel-text="拒绝"
+  cancel-color="#800000"
+  bind:linconfirm="reception"
+  bind:lincancel="turnDown"
+  />
+<v-addItem isUpdate="{{true}}" title="{{items.title}}" lover="{{items.lover}}" _id="{{items._id}}" state="{{showF}}" bind:upINData="upInThis"></v-addItem>

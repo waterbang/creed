@@ -1,0 +1,19 @@
+<!--components/initFlag/index.wxml-->
+<l-message l-class="message" />
+<l-popup show="{{_show_flag}}">
+  <view class="flag">
+    <view class="flag-text">
+      <text>
+    请输入您的匹配码，大于3位小于10位便于记忆
+  </text>
+      <text>(支持字母大小写，数字，下划线)</text>
+    </view>
+    <view class="flag-main">
+      <l-input label="匹配码" placeholder="这里写你的匹配码" required="{{true}}" value="{{flag}}" clear="{{true}}" bind:linblur="getValue" />
+      <view class="flag-btn">
+        <l-btn class="back" type="default" bind:lintap="onFlag">返回</l-btn>
+        <l-btn class="add" type="success" bind:lintap="getFlag">设置好了</l-btn>
+      </view>
+    </view>
+  </view>
+</l-popup>

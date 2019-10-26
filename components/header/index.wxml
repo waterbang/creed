@@ -1,5 +1,5 @@
 <!--components/header/header.wxml-->
    <view class="header">
-        <l-search-bar placeholder="搜索暂不可用" show-cancel="{{false}}"/>
+        <l-search-bar placeholder="搜索" show-cancel="{{false}}" clear="{{true}}"/>
         <image class="l-like" src="{{g_like}}" />
       </view>

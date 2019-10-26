@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+      "l-popup": "../../miniprogram_npm/lin-ui/popup/index",
+      "l-input": "../../miniprogram_npm/lin-ui/input/index",
+      "l-message": "../../miniprogram_npm/lin-ui/message/index"
+  }
+}

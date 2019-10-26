@@ -1,13 +1,13 @@
 <!--components/addItem/index.wxml-->
-<l-message l-class="message" />
-<l-popup show="{{_state}}"  content-align="{{anim}}" >
+<l-message l-class="message"  />
+<l-popup show="{{_state}}"  content-align="{{anim}}" z-index="{{88}}" >
 <view class="form">
 <view wx:if="{{anim=='bottom'}}" class="box"></view>
 <text class="form-title">自己的承诺要履行哦(～￣▽￣)～
 </text>
   <view class="form-main">
     <l-input label="信条标题" placeholder="这里写你的信条" required="{{true}}" value="{{title}}"  clear="{{true}}" bind:linblur="getTitle" />
-    <l-input label="标签" placeholder="这里写给谁的信条" required="{{true}}" value="{{lover}}" clear="{{true}}" bind:linblur="getlover" />
+    <l-input wx:if="{{!isUpdate}}" label="匹配码" placeholder="这里填要给的人的匹配码" value="{{lover}}" clear="{{true}}" bind:linblur="getlover" />
     <view wx:if="{{!isUpdate}}" class="form-btn" >
       <l-btn class="add" type="warning"  bind:lintap="ifDraft" >我后悔了</l-btn>
       <l-btn class="add" type="success" bind:lintap="clickAdd" >添加信条</l-btn>

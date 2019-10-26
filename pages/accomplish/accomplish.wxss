@@ -1,5 +1,4 @@
-
-
+/* pages/accomplish/accomplish.wxss */
 .loading-img{
   width: 150rpx;
   height: 150rpx;

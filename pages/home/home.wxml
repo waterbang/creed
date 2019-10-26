@@ -1,21 +1,49 @@
 <!--pages/home/home.wxml-->
 <view class="container">
-  <scroll-view scroll-y="true">
-    <view class="header" tapbind:trigger="{{trigger}}">
-      <view class="avatar">
-        <l-avatar placement="bottom" open-data="{{['userAvatarUrl','userNickName']}}" />
-      </view>
-      <text class="avatar-text">匹配码：{{alone}}</text>
+  <view class="{{header}}" bind:tap="clickHead">
+    <view class="{{avatar}}">
+      <l-avatar placement="bottom" open-data="{{['userAvatarUrl','userNickName']}}" />
     </view>
-  </scroll-view>
-  <view class="body">
-    <view class="body-list">
-      <l-list title="别人给你的信条" image="/pages/home/images/shequ.png" />
-      <l-list title="已完成" desc="已完成的信条放这里" image="/pages/home/images/chenggong.png" />
-      <l-list title="草稿" desc="查看添加的草稿" image="/pages/home/images/paihangbang.png" />
-      <l-list title="帮助" desc="(～﹃～)~zZ" image="/pages/home/images/bangzhu.png" />
+    <view class="flag-btn" wx:if="{{!alone}}">
+      <l-button size="medium" bind:lintap='showInit'>点击初始化您的信条码</l-button>
+    </view>
+    <text wx:else class="{{avatar_text}}">信条码：{{alone}}</text>
+    <view class="{{header_grid}} header_grid_place">
+      <l-grid l-class="grid">
+        <l-grid-item l-grid-item-class="grid-item" key="one" slot="one">
+          <view class="num">{{itemNum}}</view>
+          <view class="text">总信条</view>
+        </l-grid-item>
+        <l-grid-item l-grid-item-class="grid-item" key="two" slot="two">
+          <view class="num">{{accomNum}}</view>
+          <view class="text">完成的信条</view>
+        </l-grid-item>
+        <l-grid-item l-grid-item-class="grid-item" key="three" slot="three">
+          <view class="num" style="color:red;">{{remindNum}}</view>
+          <view class="text">提醒信条</view>
+        </l-grid-item>
+        <!-- <l-grid-item l-grid-item-class="grid-item" key="four" slot="four">
+          <view class="num">{{score}}分</view>
+          <view class="text">个人信用</view>
+        </l-grid-item> -->
+      </l-grid>
     </view>
   </view>
-
+  <view class="body">
+    <view class="body-list">
+      <l-list gap="{{30}}" url="/pages/myList/myList" title="我的信条" desc="您的所有信条" icon="user" />
+      <l-list gap="{{30}}" url="/pages/accomplish/accomplish" title="已完成" desc="已完成的信条放这里" icon="success" />
+       <l-list gap="{{30}}" url="/pages/remind/remind" title="提醒的信条" desc="请尽快完成提醒的信条" icon="edit" badge-count="{{remindNum}}" badge-position="right"/>
+      <l-list gap="{{30}}" url="/pages/draft/draft" title="草稿" desc="查看添加的草稿" icon="edit" />
+       <l-list gap="{{30}}" url="/pages/help/help" title="帮助" desc="(～﹃～)~zZ" icon="help" />
+      <l-list gap="{{30}}" title="夜间模式（未可用）" is-link="{{false}}" >
+        <view slot="right-section">
+          <switch />
+        </view>
+      </l-list>
+     
+    </view>
+  </view>
 </view>
+<v-init show_flag="{{show_lover}}" bind:pop="closeLover"></v-init>
 <tabbar tabbar="{{tabbar}}" bind:formList="addCache"></tabbar>

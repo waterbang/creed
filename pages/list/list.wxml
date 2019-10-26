@@ -7,12 +7,13 @@
      <view class='placeholder-view'></view>
       <view class="item-Body">
         <view wx:for="{{items}}" wx:key="{{items._id}}" wx:if="{{!(items=='')}}">
-          <v-item lock="{{items[index].lock}}" _id="{{items[index]._id}}" title="{{items[index].title}}" time="{{items[index].update_time}}" lover="{{items[index].lover}}" isLike="{{items[index].isLike}}"></v-item>
+          <v-item items="{{items[index]}}" index="{{index}}" bind:delectItem="delectItem" bind:popState="popState"></v-item>
         </view>
 
         <view class="no-item" wx:if="{{items==''}}">
-          <text>暂无信条，请先添加你对别人的承诺吧(。・∀・)ノ</text>
-          <image src="http://qyimg.waterbang.top/groovy-walk-cycle.gif" />
+          <text>别人给的信条放在这.</text>
+          <text>别人还未给你信条哦(。・∀・)ノ
+          </text>
         </view>
       </view>
     </view>

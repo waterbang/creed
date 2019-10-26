@@ -1,0 +1,30 @@
+<!--pages/draft/draft.wxml-->
+<loadmore class="loadmore" show="{{_loading}}" type="{{isEnd?'loading':'end'}}" loading-text="努力加载中~" end-text="我是有底线的...(*￣０￣)ノ">
+  <view slot="content">
+    <view class="container">
+    <v-header></v-header>
+     <view class='placeholder-view'></view>
+      <view class="item-Body">
+        <view wx:for="{{items}}" wx:key="{{items._id}}" wx:if="{{!(items=='')}}">
+          <v-item items="{{items[index]}}" my="{{false}}" index="{{index}}"  bind:popState="popState"></v-item>
+        </view>
+
+        <view class="no-item" wx:if="{{items==''}}">
+          <text>草稿放在这.</text>
+          <text>你还未添加草稿！
+          </text>
+        </view>
+      </view>
+    </view>
+  </view>
+</loadmore>
+ <view class='placeholder-view'></view>
+  <l-popup show="{{openPop}}" content-align="bottom"  >
+    <view class='pupop-content'>
+    <text class="popop-text">填你要发的人的匹配码🐈（点击黑色部分可用关闭哦）</text>
+     <l-input label="匹配码" placeholder="这里填要给的人的匹配码" value="{{lover}}" clear="{{true}}" bind:linblur="getlover" />
+      <view  class="form-btn" >
+      <l-btn class="add" type="success" bind:lintap="sendLover" >发送信条</l-btn>
+    </view>
+    </view>
+</l-popup>

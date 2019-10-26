@@ -1,43 +1,37 @@
 // components/item/index.js
+import{
+  config
+} from '../../config.js'
 import {
   ItemModel
 } from '../../models/item.js'
 import {
   ItemState
 } from '../../models/itemState.js'
-let stateModel = new ItemState()
+import {
+  Storage
+} from '../../utils/storage.js'
+const Item = 'item'; 
+const storage = new Storage();
+let stateModel = new ItemState();
 const itemModel = new ItemModel()
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-    title:{
-      type:String
-    },
-    time:{
-      type:String
-    },
-    lover:String,
-    _id:{
-      type:String,
-      
-    },
-    lock:{
-      type:Boolean,
+    items:{
+      type: Object,
       observer: function (newVal) {
         this.setData({
-          _lock: newVal
+          _lock:newVal.lock
         })
       }
     },
-    isLike:{
+    index:Number,
+    my:{
       type: Boolean,
-      observer:function(newVal){
-        this.setData({
-          like: newVal
-        })
-      }
+      value:true
     }
   },
 
@@ -47,44 +41,46 @@ Component({
   data: {
     _time:0,
     like:false,
-    _lock:false,
-    stateLike: './images/like.png',
-    notClickLike:'./images/aixin.svg' ,
-    clickLikeIng: './images/like.gif',
-    clickLike: './images/like.png',
+    stick: './images/zhiding.svg',
     dataImgUrl:'./images/bianji.svg',
     diDataImgUrl: './images/bianji_LE.svg',
-    showF: false
-
+    remindImg:'./images/tixing.svg',
+    sendImg: './images/chenggong.svg',//核销
+    diSendImgUrl:"./images/fenxiang_LE.svg",//发送
+    sendImgUrl: "http://qyimg.waterbang.top/fenxiang.svg",//发送
+    showF: false,
+    creed:false
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-
     /**
-     * 喜欢
+     * 是否打开dialog
      */
-    async isLike(){
+    clickDialogState(){
+      if (this.data._lock === 4 || !this.data.my){
+        return
+      }
       this.setData({
-        clickLike: this.data.clickLikeIng,
-        like: !this.data.like
+        creed:!this.data.creed
       })
-      let status = await stateModel.upLike(this.data._id, this.data.like)
-
-      setTimeout(()=>{
-        this.setData({
-          clickLike: this.data.stateLike
-        })
-      },600)
     },
     /**
      * 开启更新
      */
     update(e){
-      if (this.data._lock){ //如果已经发送给别人了，就不可修改
-        this._showError("已经发送并锁定，不可更改😪")
+      if (this.data._lock === config.SUCCEED  ){ //如果已经发送给别人了，就不可修改
+        this._showError("已经发送，不可更改😪")
+        return
+      }
+      if (this.data._lock === config.LOCK){
+        this._showError("已经锁定，不可更改😀")
+        return
+      }
+      if (this.data._lock === config.ACCOMPLISH) {
+        this._showError("已经完成，不可更改👌")
         return
       }
       this.setData({
@@ -92,22 +88,67 @@ Component({
       })
     },
     /**
+     * 拒绝
+     */
+    async turnDown(){
+       let lock = await stateModel.upItemState(this.data.items._id, config.REJECT);
+       if(lock){
+         this.triggerEvent('delectItem', this.data.index)
+      }
+        this.clickDialogState()
+    },
+    /**
+     * 接收！锁定
+     */
+    async reception(){
+     let lock = await stateModel.upItemState(this.data.items._id, config.LOCK);
+     if(lock){
+       this.clickDialogState()
+       this.setData({
+         _lock: config.LOCK
+       })
+       let newData = storage.all(Item);
+       newData[this.data.index].lock = config.LOCK;
+       storage.add(Item,newData);
+       this._showSuccess('锁定成功！')
+
+     }
+      
+    },
+    /**
+     * 置顶
+     */
+    stickItem(){
+      this.triggerEvent('popState', { index: this.data.index,tag:1})
+    },
+    /**
+     * 提醒
+     */
+    remind(){
+      this.triggerEvent('popState', { index: this.data.index, tag:2 })
+    },
+    /**
+     * 核销
+     */
+    cancel(){
+      this.triggerEvent('popState', { index: this.data.index, tag:3 })
+    },
+    /**
+    * 发送
+    */
+    send() {
+      this.triggerEvent('popState', { index: this.data.index, tag:4 })
+    },
+    /**
      * 更新状态
      */
     upInThis(e){
       this.setData({
-        title: e.detail.title,
-        lover: e.detail.lover
+        'items.title': e.detail.title
       })
-      
+      this.triggerEvent('popState', { index: this.data.index, title: e.detail.title, tag: 5 })
     },
-
-    /**
-     * 发送信条
-     */
-    send(){
-
-    },
+   
     _showSuccess(content) {
       wx.lin.showMessage({
         type: 'success',

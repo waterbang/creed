@@ -63,6 +63,33 @@
 					"pathName": "pages/home/home",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/myList/myList",
+					"pathName": "pages/myList/myList",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/accomplish/accomplish",
+					"pathName": "pages/accomplish/accomplish",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/draft/draft",
+					"pathName": "pages/draft/draft",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/help/help",
+					"pathName": "pages/help/help",
+					"scene": null
 				}
 			]
 		}
