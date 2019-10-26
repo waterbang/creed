@@ -2,16 +2,12 @@ import {
   db
 } from '../utils/database.js'
 import {
-  aes
-} from '../utils/aes.js'
-import {
   config
 } from '../config.js'
 import {
   UserModel
 } from './user.js'
 
-const AES = new aes()
 const userModel = new UserModel()
 const openid = userModel.getOpenid();
 class ItemModel {
@@ -23,8 +19,8 @@ class ItemModel {
   pullRefresh(pageIndex){
    return  db.collection('item')
       .where({
-        _openid: openid,
-        isDel: false // 填入当前用户 openid
+        _openid: openid,// 填入当前用户 openid
+        isDel: false 
       })
      .skip(pageIndex) // 跳过结果集中的前 10 条，从第 11 条开始返回
      .limit(10)// 限制返回数量为 10 条
@@ -82,7 +78,7 @@ class ItemModel {
         title: title,
         isLike: false,
         lover: lover,
-        flag: AES.encryptFlag(),
+        flag: null,
         draft: draft||false,
         lock: false,
         update_time: new Date().toLocaleString(),

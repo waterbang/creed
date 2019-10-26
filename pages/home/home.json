@@ -1,5 +1,7 @@
 {
   "usingComponents": {
-    "tabbar": "../../tabbarComponent/tabbar"
+    "tabbar": "../../tabbarComponent/tabbar",
+    "l-avatar": "../../miniprogram_npm/lin-ui/avatar/index",
+      "l-list": "../../miniprogram_npm/lin-ui/list/index"
     }
 }

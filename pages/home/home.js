@@ -12,6 +12,7 @@ Page({
    */
   data: {
     tabbar: {},
+    alone:'waterbang',//每个人的匹配码
   },
 /**
  * 发布list更新消息
@@ -19,7 +20,12 @@ Page({
   addCache(){
     app.globalData.listState = true
   },
+  /**
+   * header动画
+   */
+  trigger(){
 
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -59,7 +65,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    console.log("下拉")
   },
 
   /**

@@ -64,3 +64,8 @@
 .message{
   z-index: 9999;
 }
+
+.box{
+  height: 500rpx;
+  width: 100%;
+}

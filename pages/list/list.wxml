@@ -12,7 +12,7 @@
 
         <view class="no-item" wx:if="{{items==''}}">
           <text>暂无信条，请先添加你对别人的承诺吧(。・∀・)ノ</text>
-          <image src="./images/groovy-walk-cycle.gif" />
+          <image src="http://qyimg.waterbang.top/groovy-walk-cycle.gif" />
         </view>
       </view>
     </view>

@@ -1,7 +1,8 @@
 <!--components/addItem/index.wxml-->
 <l-message l-class="message" />
-<l-popup show="{{_state}}" >
+<l-popup show="{{_state}}"  content-align="{{anim}}" >
 <view class="form">
+<view wx:if="{{anim=='bottom'}}" class="box"></view>
 <text class="form-title">自己的承诺要履行哦(～￣▽￣)～
 </text>
   <view class="form-main">

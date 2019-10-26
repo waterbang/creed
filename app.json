@@ -1,7 +1,12 @@
 {
   "pages": [
     "pages/list/list",
-    "pages/home/home" 
+    "pages/home/home",
+    "pages/myList/myList",
+    "pages/accomplish/accomplish",
+    "pages/remind/remind",
+    "pages/draft/draft",
+    "pages/help/help"
   ],
   "window": {
     "backgroundColor": "#ffffff",

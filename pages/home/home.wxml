@@ -1,4 +1,21 @@
 <!--pages/home/home.wxml-->
-<view>我的页面
+<view class="container">
+  <scroll-view scroll-y="true">
+    <view class="header" tapbind:trigger="{{trigger}}">
+      <view class="avatar">
+        <l-avatar placement="bottom" open-data="{{['userAvatarUrl','userNickName']}}" />
+      </view>
+      <text class="avatar-text">匹配码：{{alone}}</text>
+    </view>
+  </scroll-view>
+  <view class="body">
+    <view class="body-list">
+      <l-list title="别人给你的信条" image="/pages/home/images/shequ.png" />
+      <l-list title="已完成" desc="已完成的信条放这里" image="/pages/home/images/chenggong.png" />
+      <l-list title="草稿" desc="查看添加的草稿" image="/pages/home/images/paihangbang.png" />
+      <l-list title="帮助" desc="(～﹃～)~zZ" image="/pages/home/images/bangzhu.png" />
+    </view>
+  </view>
+
 </view>
-<tabbar tabbar="{{tabbar}}" bind:formList="addCache" ></tabbar>
+<tabbar tabbar="{{tabbar}}" bind:formList="addCache"></tabbar>

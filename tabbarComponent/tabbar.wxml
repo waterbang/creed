@@ -13,7 +13,7 @@
     </navigator>
   </block>
 </view>
-<v-addItem  state="{{showF}}" bind:clickAdd="informList"></v-addItem>
+<v-addItem anim="bottom"  state="{{showF}}" bind:clickAdd="informList"></v-addItem>
 <!-- <navigator wx:if="{{item.isSpecial}}" class="tabbar_nav" hover-class="none" url="{{item.pagePath}}" style="color:{{tabbar.selectedColor}}" open-type="navigate">
       <view class='special-wrapper'>
         <image class="tabbar_icon" src="{{item.iconPath}}"></image>

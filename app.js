@@ -63,20 +63,20 @@ App({
       "list": [
         {
           "pagePath": "/pages/list/list",
-          "iconPath": "icon/icon_home.png",
-          "selectedIconPath": "icon/icon_home_HL.png",
+          "iconPath": "/tabbarComponent/icon/icon_home.png",
+          "selectedIconPath": "/tabbarComponent/icon/icon_home_HL.png",
           "text": "信列"
         },
         {
           "pagePath": "/pages/add/add",
-          "iconPath": "icon/icon_release.png",
+          "iconPath": "/tabbarComponent/icon/icon_release.png",
           "isSpecial": true,
           "text": "添加"
         },
         {
           "pagePath": "/pages/home/home",
-          "iconPath": "icon/icon_mine.png",
-          "selectedIconPath": "icon/icon_mine_HL.png",
+          "iconPath": "/tabbarComponent/icon/icon_mine.png",
+          "selectedIconPath": "/tabbarComponent/icon/icon_mine_HL.png",
           "text": "我的"
         }
       ]
