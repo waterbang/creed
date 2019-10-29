@@ -1,6 +1,9 @@
 {
   "component": true,
   "usingComponents": {
-    "l-search-bar": "../../miniprogram_npm/lin-ui/search-bar/index"
+    "l-search-bar": "../../miniprogram_npm/lin-ui/search-bar/index",
+    "v-item": "../item/index",
+    "l-popup": "../../miniprogram_npm/lin-ui/popup/index",
+    "l-message": "../../miniprogram_npm/lin-ui/message/index"
   }
 }

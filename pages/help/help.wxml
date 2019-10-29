@@ -1,11 +1,14 @@
 <!--pages/help/help.wxml-->
 <l-message l-class="message"  />
 <view class="container">
+<view class="list">
+ <l-list gap="{{30}}" title="清空缓存"bind:lintap="clearCache"   desc="当您遇到奇奇怪怪的问题的时候点击清空缓存" 
+ icon="time"  tagShape="circle" tag-position="right"/>
+</view>
 <view class="help-text">
 <view>如果您在使用过程中发现一些BUG</view>
 <view>您可以点击清空缓存，这样能做到数据的同步</view>
 <view>如果您未解决问题，请电邮<l-tag shape="square">waterbang@qq.com</l-tag></view>
 </view>
- <l-list gap="{{30}}" title="清空缓存"bind:lintap="clearCache"   desc="当您遇到奇奇怪怪的问题的时候点击清空缓存" 
- icon="time"  tagShape="circle" tag-position="right"/>
+
 </view>

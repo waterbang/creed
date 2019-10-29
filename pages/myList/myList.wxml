@@ -3,11 +3,12 @@
 <loadmore class="loadmore" show="{{_loading}}" type="{{isEnd?'loading':'end'}}" loading-text="努力加载中~" end-text="我是有底线的...(*￣０￣)ノ">
   <view slot="content">
     <view class="container">
-     <v-header></v-header>
+     <v-header cache="{{items}}" my="{{false}}" bind:popState="popState"></v-header>
+        {{lover}}
      <view class='placeholder-view'></view>
       <view class="item-Body">
         <view wx:for="{{items}}" wx:key="{{items._id}}" wx:if="{{!(items=='')}}">
-      <v-item items="{{items[index]}}" index="{{index}}" my="{{false}}"bind:popState="popState" ></v-item>
+      <v-item items="{{items[index]}}" index="{{index}}" my="{{false}}" newLover="{{lover}}" bind:popState="popState" ></v-item>
         </view>
 
         <view class="no-item" wx:if="{{items==''}}">

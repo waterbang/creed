@@ -61,10 +61,18 @@
 }
 
 .message{
-  z-index: 9999;
+  z-index: 9999!important;
 }
 
 .box{
   height: 500rpx;
   width: 100%;
+}
+
+.form-tag{
+  margin-top: 60rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-around;
 }

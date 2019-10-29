@@ -1,4 +1,8 @@
 /* pages/help/help.wxss */
+.list{
+  margin-top: 30rpx;
+}
+
 .help-text{
   margin: 50rpx 0;
   display: flex;

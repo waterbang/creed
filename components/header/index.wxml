@@ -1,5 +1,18 @@
 <!--components/header/header.wxml-->
-   <view class="header">
-        <l-search-bar placeholder="搜索" show-cancel="{{false}}" clear="{{true}}"/>
-        <image class="l-like" src="{{g_like}}" />
-      </view>
+<view class="header">
+  <l-search-bar placeholder="搜索"  clear="{{true}}" show-cancel="{{showP}}" value="{{value}}"
+  bind:linfocus="ifShowPopup" bind:lincancel="offPop" bind:linchange="searchItem" />
+  <image class="l-like" src="{{g_like}}" />
+</view>
+  <l-popup show="{{showP}}" content-align="top" l-bg-class="popup" locked="{{true}}" z-index="1">
+    <view class='placeholder-view'></view>
+    <view class="popup-container">
+     <view wx:for="{{headItems}}" wx:key="{{headItems._id}}" wx:if="{{!(headItems=='')}}">
+          <v-item items="{{headItems[index]}}" index="{{index}}" my="{{false}}"  bind:delectItem="delectItem" bind:popState="popState"></v-item>
+        </view>
+         <view class="no-item" wx:if="{{headItems==''}}">
+          <text>无搜索结果...</text>
+        </view>
+    </view>
+  </l-popup>
+  <l-message show="{{content}}" content="{{content}}"  />

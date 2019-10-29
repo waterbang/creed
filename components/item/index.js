@@ -32,6 +32,14 @@ Component({
     my:{
       type: Boolean,
       value:true
+    },
+    newLover:{
+      type:String,
+      observer: function (newVal) {
+          this.setData({
+            'items.lover':newVal
+          })
+      }
     }
   },
 
@@ -119,19 +127,19 @@ Component({
      * 置顶
      */
     stickItem(){
-      this.triggerEvent('popState', { index: this.data.index,tag:1})
+      this.triggerEvent('popState', { index: this.data.index, tag: 1})
     },
     /**
      * 提醒
      */
     remind(){
-      this.triggerEvent('popState', { index: this.data.index, tag:2 })
+      this.triggerEvent('popState', { index: this.data.index, tag: 2 })
     },
     /**
      * 核销
      */
     cancel(){
-      this.triggerEvent('popState', { index: this.data.index, tag:3 })
+      this.triggerEvent('popState', { index: this.data.index, tag:3})
     },
     /**
     * 发送

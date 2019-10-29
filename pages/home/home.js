@@ -34,8 +34,8 @@ Page({
     remindNum:0,//提醒的信条数量
     itemNum:0,//总信条数
     accomNum:0,//完成的信条数
+    timeout:0
   },
- 
   /**
    * 点击header
    */
@@ -43,7 +43,11 @@ Page({
     if (!this.data.alone){
       return
     }
-    common.debounce(this.trigger(), 4000,false)
+      clearTimeout(this.data.timeout)
+      this.data.timeout = setTimeout(()=>{
+        this.trigger()//重新绑定this
+      }, 500);
+    
   },
   /**
    * header动画
@@ -116,12 +120,9 @@ Page({
  async getRemindNum(){
    let num;
   
-   if (storage.all('remindNum')){
-     num = storage.all('remindNum');
-   }else{
+
      num = await homeModel.getRemind();
      storage.add('remindNum', num)
-   }
    if(num){
      this.setData({
        remindNum:num

@@ -33,19 +33,31 @@ class ItemState {
  * 更改状态
  */
 upItemState(_id,lock){
-  return db.collection('item').doc(_id)
-    .update({
-      data: {
-        lock: lock,
-        warn:false
-      }
-    })
-    .then(res => {
-      return res;
-    })
-    .catch(err => {
-      return err
-    })
+  return wx.cloud.callFunction({
+    name: 'upItemState',
+    data: {
+      _id: _id,
+      lock: lock,
+    }
+  }).then(res => {
+    return res;
+  }).catch(err => {
+    return err;
+  })
+
+  // return db.collection('item').doc(_id)
+  //   .update({
+  //     data: {
+  //       lock: lock,
+  //       warn:false
+  //     }
+  //   })
+  //   .then(res => {
+  //     return res;
+  //   })
+  //   .catch(err => {
+  //     return err
+  //   })
 }
 /**
  * 发送

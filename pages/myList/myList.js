@@ -44,7 +44,7 @@ Page({
     this.data.index = e.detail.index;
       let tag = e.detail.tag;
       if(tag===1){  //置顶
-        this.stickFn(index)
+        this.stickFn(this.data.index)
       }
       if(tag===4){
         if (this.data.items[this.data.index].lock === 1) {
@@ -88,10 +88,15 @@ Page({
     let send = await itemState.sendItem(this.data.items[this.data.index]._id,this.data.lover);
     if (send){
         this._showSuccess("发送成功！");
+        //更新item的lover状态
+        this.setData({
+          lover:this.data.lover
+        })
+        //更新缓存状态
       this.data.items[this.data.index].lock=1;
       this.data.items[this.data.index].lover = this.data.lover;
       storage.add(MyItem,this.data.items)
-      this.openPopup();//发送
+      this.openPopup();//关闭发送框
       return
     }
     this._showSuccess("发送失败！");
@@ -120,11 +125,11 @@ Page({
     if (!this.data.isEnd) {//数据加载是否完成
       return
     }
-
-    if (storage.all(MyItem)) {
-      this._unEnd()
-      return
-    }
+    // if (storage.all(MyItem)) {
+    //   this._unEnd()
+    //   return
+    // }
+   
 
     let lastData = await myItemModel.pullRefresh(this.data.pageIndex += 10);
     if (lastData) {
@@ -198,7 +203,7 @@ Page({
       newItem = latest[--this.data.index]._id;
     } catch (e) {
       if (!oldItem) {
-        let data = await myModel.showItem();
+        let data = await myItemModel.showItem();
         this.setData({
           items: data
         })
@@ -310,6 +315,7 @@ Page({
    */
   onPullDownRefresh: function () {
     this.theLatest()
+    wx.stopPullDownRefresh();
   },
 
   /**

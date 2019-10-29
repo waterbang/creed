@@ -31,7 +31,6 @@
 .placeholder-view {
   width: 100%;
   height: 100rpx;
-  margin-top: 50rpx;
 }
 
 .item-Body{

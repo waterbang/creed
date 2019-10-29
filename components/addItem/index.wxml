@@ -8,6 +8,11 @@
   <view class="form-main">
     <l-input label="信条标题" placeholder="这里写你的信条" required="{{true}}" value="{{title}}"  clear="{{true}}" bind:linblur="getTitle" />
     <l-input wx:if="{{!isUpdate}}" label="匹配码" placeholder="这里填要给的人的匹配码" value="{{lover}}" clear="{{true}}" bind:linblur="getlover" />
+    <view class="form-tag">
+     <view class="tag" wx:for="{{tag}}" wx:key="{{index}}" wx:if="{{!(tag=='')}}">
+      <l-tag plain="{{true}}" bind:lintap="clickTag" name="{{tag[index]}}">{{tag[index]}}</l-tag>
+     </view>
+    </view>
     <view wx:if="{{!isUpdate}}" class="form-btn" >
       <l-btn class="add" type="warning"  bind:lintap="ifDraft" >我后悔了</l-btn>
       <l-btn class="add" type="success" bind:lintap="clickAdd" >添加信条</l-btn>

@@ -12,7 +12,6 @@ class Common {
     return function() {
       let context = this;
       let args = arguments;
-
       if (timeout) clearTimeout(timeout);
       if (immediate) {
         var callNow = !timeout;
@@ -44,6 +43,8 @@ class Common {
     }
   }
 }
+  
+  
 }
 
 

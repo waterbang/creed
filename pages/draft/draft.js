@@ -149,6 +149,11 @@ Page({
     let send = await stateModel.sendItem(this.data.items[this.data.index]._id, this.data.lover);
     if (send) {
       this._showSuccess("发送成功！");
+      //更新item的lover状态
+      this.setData({
+        lover: this.data.lover
+      })
+        //更新缓存状态
       this.data.items.splice(this.data.index,1);
       storage.add(Item, this.data.items)
       this.setData({
@@ -168,10 +173,10 @@ Page({
     if (!this.data.isEnd) { //数据加载是否完成
       return
     }
-    if (storage.all(Item)) {
-      this._unEnd()
-      return
-    }
+    // if (storage.all(Item)) {
+    //   this._unEnd()
+    //   return
+    // }
     let lastData = await myModel.pullRefresh(this.data.pageIndex += 10, State);
     if (lastData) {
       let newData = this.data.items.concat(lastData)
@@ -343,6 +348,7 @@ Page({
    */
   onPullDownRefresh: function () {
     this.theLatest()
+    wx.stopPullDownRefresh();
   },
 
 

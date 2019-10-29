@@ -24,6 +24,12 @@ Component({
       value: false,
       observer: function(newVal) {
         this.unForm()
+        if(storage.all('tag')){ //初始化tag
+          let tag = storage.all('tag');
+            this.setData({
+              tag: tag
+            })
+        }
       }
     },
     isUpdate: {
@@ -43,14 +49,22 @@ Component({
     _state: false,
     title: null,
     lover: null,
-    draft: false
+    draft: false,
+    tag:[],//lover标签
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-
+    /**
+     * 点击标签
+     */
+    clickTag(e){
+      this.setData({
+        lover: e.detail.name
+      })
+    },
     /**
      * 打开是否草稿
      */
@@ -96,6 +110,7 @@ Component({
         return
       }
 
+      this.setTag(this.data.lover);
       myItemModel.addItem(this.data.title, this.data.lover)
         .then(res => {
           this._showSuccess("添加成功！")
@@ -124,6 +139,26 @@ Component({
         this._showError("修改失败！")
       }
 
+    },
+    /**
+     * tag问题
+     */
+    setTag(lover){
+      let tagArr=[];
+      if(storage.all('tag')){
+        tagArr = storage.all('tag');
+        tagArr.unshift(lover);
+        let newTag = tagArr.filter((element,index,self)=>{
+         return self.indexOf(element) === index;
+       })
+        storage.add('tag', newTag)
+        this.setData({
+          tag: newTag
+        })
+        return
+      }
+      tagArr.unshift(lover) ;
+      storage.add('tag', tagArr)
     },
     /**
      * 关闭所有弹窗
@@ -162,8 +197,8 @@ Component({
       this.data.title = e.detail.value;
     },
     getlover(e) {
-      this.data.lover = e.detail.value;
-
+      this.data.lover = e.detail.value; 
+      this.data.tag.push(e.detail.value)
     },
     _showSuccess(content) {
       wx.lin.showMessage({
@@ -181,5 +216,5 @@ Component({
         icon: 'warning'
       })
     }
-  }
+  },
 })
