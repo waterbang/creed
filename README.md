@@ -4,7 +4,7 @@
   <tbody>
     <tr>
       <td align="center" valign="middle">
-         <img class="QR-img" style="height: 60px; width:60px"  src="" alt="5毛钱小程序">
+         <img class="QR-img" style="height: 60px; width:60px"  src="https://raw.githubusercontent.com/watebang/creed/master/images/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%A0%81.jpg" alt="5毛钱小程序">
         <p style="font-size:12px;">5毛钱小程序</p>
       </td>
     </tr>
@@ -14,8 +14,8 @@
 <div align="center">
 
 ![](https://img.shields.io/badge/-javascript-brightgreen)
-![](https://img.shields.io/npm/l/npm?label=build)
-![](https://img.shields.io/badge/license-MIT-3963bc.svg)
+![](https://img.shields.io/badge/-%E4%BA%91%E5%BC%80%E5%8F%91-orange)
+![](https://img.shields.io/badge/-waterbang-brightgreen)
 
 </div>
 接收的人可以同意，可以拒绝，你的承诺完成了，就可以核销✅。
