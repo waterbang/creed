@@ -1,18 +1,18 @@
-# 信条🚩
+# 5毛钱信条🚩
 
 <table>
   <tbody>
     <tr>
       <td align="center" valign="middle">
-         <img class="QR-img" style="height: 60px; width:60px"  
-         src="https://raw.githubusercontent.com/watebang/creed/master/images/Creed.jpg" alt="5毛钱小程序">
+         <img class="QR-img" style="height: 100px; width:100px"  
+         src="./images/Creed.jpg" alt="5毛钱小程序">
         <p style="font-size:12px;">5毛钱小程序</p>
       </td>
     </tr>
   </tbody>
 </table>
 
-<div align="center">
+<div align="left">
 
 ![](https://img.shields.io/badge/-javascript-brightgreen)
 ![](https://img.shields.io/badge/-%E4%BA%91%E5%BC%80%E5%8F%91-orange)
