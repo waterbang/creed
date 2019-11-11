@@ -1,5 +1,5 @@
 <view class="tabbar_box {{isIphoneX?'iphoneX-height':''}}" style="background-color:{{tabbar.backgroundColor}}">
-  <block wx:for="{{tabbar.list}}" wx:key="{{item.pagePath}}">
+  <block wx:for="{{tabbar.list}}" wx:key="unique">
     <view wx:if="{{item.isSpecial}}" class="tabbar_nav" hover-class="none" style="color:{{tabbar.selectedColor}}"  bindtap="showForm" >
       <view class='special-wrapper'>
         <image class="tabbar_icon" src="{{item.iconPath}}"></image>
@@ -14,10 +14,3 @@
   </block>
 </view>
 <v-addItem anim="bottom"  state="{{showF}}" bind:clickAdd="informList"></v-addItem>
-<!-- <navigator wx:if="{{item.isSpecial}}" class="tabbar_nav" hover-class="none" url="{{item.pagePath}}" style="color:{{tabbar.selectedColor}}" open-type="navigate">
-      <view class='special-wrapper'>
-        <image class="tabbar_icon" src="{{item.iconPath}}"></image>
-      </view>
-      <image class='special-text-wrapper'></image>
-      <text>{{item.text}}</text>
-    </navigator> -->

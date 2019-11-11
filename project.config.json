@@ -9,11 +9,12 @@
 		"es6": true,
 		"enhance": true,
 		"postcss": true,
-		"minified": false,
+		"minified": true,
 		"newFeature": true,
 		"coverView": true,
 		"nodeModules": true,
 		"autoAudits": true,
+		"uglifyFileName": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -24,8 +25,8 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.3",
-	"appid": "wxc7389b834407bd04",
+	"libVersion": "2.9.2",
+	"appid": "wxfb6f05cb017bdc99",
 	"projectname": "%E6%96%B0%E4%BF%A1%E6%9D%A1",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -89,7 +90,15 @@
 					"id": -1,
 					"name": "pages/help/help",
 					"pathName": "pages/help/help",
+					"query": "",
 					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "pages/list/list",
+					"pathName": "pages/list/list",
+					"query": "id=4a741dc95dbd369300623d025190317b",
+					"scene": 1007
 				}
 			]
 		}

@@ -3,19 +3,26 @@
 <l-popup show="{{_state}}"  content-align="{{anim}}" z-index="{{88}}" >
 <view class="form">
 <view wx:if="{{anim=='bottom'}}" class="box"></view>
-<text class="form-title">自己的承诺要履行哦(～￣▽￣)～
-</text>
+<view class="form-title">
+  <text >自己的承诺要履行哦(～￣▽￣)～</text>
+  <text>(您可以不填匹配码直接点击右上角在微信分享哦)</text>
+</view> 
   <view class="form-main">
     <l-input label="信条标题" placeholder="这里写你的信条" required="{{true}}" value="{{title}}"  clear="{{true}}" bind:linblur="getTitle" />
-    <l-input wx:if="{{!isUpdate}}" label="匹配码" placeholder="这里填要给的人的匹配码" value="{{lover}}" clear="{{true}}" bind:linblur="getlover" />
+    <l-input wx:if="{{!isUpdate}}" label="匹配码" placeholder="这里填要给的人的匹配码" value="{{lover}}" clear="{{true}}"  bind:linblur="getlover"     bind:lininput="setShare" />
     <view class="form-tag">
-     <view class="tag" wx:for="{{tag}}" wx:key="{{index}}" wx:if="{{!(tag=='')}}">
+     <view class="tag" wx:for="{{tag}}" wx:key="unique" wx:if="{{!(tag=='')}}">
       <l-tag plain="{{true}}" bind:lintap="clickTag" name="{{tag[index]}}">{{tag[index]}}</l-tag>
      </view>
     </view>
     <view wx:if="{{!isUpdate}}" class="form-btn" >
       <l-btn class="add" type="warning"  bind:lintap="ifDraft" >我后悔了</l-btn>
-      <l-btn class="add" type="success" bind:lintap="clickAdd" >添加信条</l-btn>
+     <view wx:if="{{isShareBtn}}">
+      <l-btn class="add" type="success"  bind:lintap="clickAdd" >打一条</l-btn>
+      </view>
+      <view wx:else>
+      <l-btn class="add"   bind:lintap="sendShare"  >分享</l-btn>
+      </view>
     </view>
      <view wx:if="{{isUpdate}}" class="form-btn">
       <l-btn class="add" type="warning"  bind:lintap="unForm" >我按错了</l-btn>
@@ -31,6 +38,15 @@
  <view class="draft-main">
  <l-btn class="add" type="warning"  bind:lintap="unWindow" >拒绝</l-btn>
   <l-btn class="add" type="success" bind:lintap="addDraft" >同意</l-btn>
+  </view>
+  </view>
+</l-popup>
+<l-popup  show="{{isShare}}" content-align="bottom"z-index="1000"> 
+<view class="draft">
+<view class="draft-text">是否分享给好友🎈</view>
+ <view class="draft-main">
+ <l-btn class="add" type="warning"  bind:lintap="unWindow" >我按错了</l-btn>
+  <l-btn class="add" type="success" open-type="share" bind:lintap="immediatelyShare" >马上分享</l-btn>
   </view>
   </view>
 </l-popup>

@@ -11,6 +11,7 @@ import {
 
 const userModel = new UserModel()
 const openid = userModel.getOpenid();
+
 class MyItemModel {
   constructor() { 
 
@@ -75,19 +76,25 @@ class MyItemModel {
 
 
 
-  addItem(title, lover = '') {
+  addItem(title, lover = '', oneself) {
     return db.collection('item').add({
       data: {
         title: title,
         isLike: false,
         lover: lover,
+        oneself: oneself,
         lock: lover ? 1 : 2,
         warn:false,
         update_time: this.getNowFormatDate(),
         create_time: db.serverDate(),
         isDel: false
       }
+    }).then(res => {
+      return res
     })
+      .catch(err => {
+        return err
+      })
 
   }
 
@@ -118,6 +125,27 @@ class MyItemModel {
       + seperator2 + date.getSeconds();
     return currentdate;
   }
+
+  //文字信息安全检查
+  msgSecCheck(content) {
+    return new Promise((resolve, reject) => {
+      wx.cloud.callFunction({
+        name: 'securityCheck',
+        data: { content: content, type: 2 },
+      }).then(res => {
+        if (res && res.result && res.result.errCode === 0) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }).catch(err => {
+        console.log(err)
+        //只要检查失败，都算作没有安全风险
+        resolve(false);
+      })
+    })
+  }
+
 
 
 }

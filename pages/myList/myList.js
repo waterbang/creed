@@ -28,14 +28,42 @@ Page({
     openPop:false,//打开发送栏
     lover:'',//填写的信条码
     index:1,//索引
+    isShare:false,
+    share: {},
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     app.editTabbar();
     this.showNewItem()//显示前10
+  },
+  /**
+   * 监听输入
+   */
+  setShare(value) {
+    if (value.detail.value) {
+      this.setData({
+        isShare: true
+      })
+    } else {
+      this.setData({
+        isShare: false
+      })
+    }
+  },
+  /**
+  * 回传分享
+  */
+  async sendShare(index) {
+    let _data = this.data.items[index];
+    if (_data._id) {
+      this.data.share = {
+        id: _data._id,
+        oneself: _data.oneself,
+        title: _data.title
+      }
+    }
   },
   /**
    * 接收状态
@@ -59,7 +87,7 @@ Page({
           this._showError('该信条已经完成，不可再次发送！')
           return
         }
-
+        this.sendShare(this.data.index )
         this.openPopup();//发送
         return
       }
@@ -285,7 +313,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    wx.hideShareMenu()//隐藏转发按钮
   },
 
   /**
@@ -293,7 +321,6 @@ Page({
    */
   onShow: function () {
     this.monitorInfo()//监听list更新
-
   },
 
   /**
@@ -329,6 +356,13 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
-  }
+    let _data = this.data.share;
+    if (_data) {
+      return {
+        title: _data.title,
+        desc: _data.oneself + "给您打了信条",
+        path: '/pages/list/list?id=' + _data.id
+      }
+    }
+  },
 })

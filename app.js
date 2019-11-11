@@ -1,7 +1,7 @@
 //app.js
 App({
   onLaunch: function() {
-
+  
     //隐藏系统tabbar
     wx.hideTabBar();
     //获取设备信息
@@ -12,14 +12,13 @@ App({
  
   globalData: {
     userInfo: null,
-  
   },
   /**
    * 初始化数据库
    * */
   initDb: () => {
     wx.cloud.init({
-      env: 'waterbang-0q2f8',
+      env: 'waterbang-f5jvn',
       traceUser: true
     })
   },

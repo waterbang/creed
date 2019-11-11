@@ -6,7 +6,7 @@
       <text>
     请输入您的匹配码，大于3位小于10位便于记忆
   </text>
-      <text>(支持字母大小写，数字，下划线)</text>
+      <text>(支持字母大小写，数字，下划线，中文)</text>
     </view>
     <view class="flag-main">
       <l-input label="匹配码" placeholder="这里写你的匹配码" required="{{true}}" value="{{flag}}" clear="{{true}}" bind:linblur="getValue" />

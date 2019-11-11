@@ -15,7 +15,14 @@
 }
 .form-title{
   margin-bottom: 150rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+   display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:center;
+}
+.form-title text:last-child{
+  font-size: 14px;
+  color:#c8c8c8
 }
 
 

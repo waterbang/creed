@@ -38,7 +38,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    g_like: "http://qyimg.waterbang.top/paperplane.gif",
+    g_like: "",
     showP: false, //显示隐藏
     list:[],//title
     headItems: [], //视图层显示

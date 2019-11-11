@@ -1,5 +1,5 @@
 const config = {
-  env:'waterbang-0q2f8',
+  env:'waterbang-f5jvn',
   SUCCEED:1,//发送成功
   DRAFT:2,//草稿
   REJECT:3,//拒绝

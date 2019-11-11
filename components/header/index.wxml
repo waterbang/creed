@@ -7,7 +7,7 @@
   <l-popup show="{{showP}}" content-align="top" l-bg-class="popup" locked="{{true}}" z-index="1">
     <view class='placeholder-view'></view>
     <view class="popup-container">
-     <view wx:for="{{headItems}}" wx:key="{{headItems._id}}" wx:if="{{!(headItems=='')}}">
+     <view wx:for="{{headItems}}" wx:key="unique" wx:if="{{!(headItems=='')}}">
           <v-item items="{{headItems[index]}}" index="{{index}}" my="{{false}}"  bind:delectItem="delectItem" bind:popState="popState"></v-item>
         </view>
          <view class="no-item" wx:if="{{headItems==''}}">

@@ -39,6 +39,20 @@ Page({
     this.showNewItem() //显示前10
   },
   /**
+ * 监听拒绝后移除元素
+ */
+  delectItem(e) {
+    let newItem = this.data.items.splice(e.detail, 1);
+    if (newItem) {
+      this.setData({
+        items: this.data.items
+      })
+      storage.add(Item, this.data.items)
+    }
+
+    this._showSuccess("您删除了这个信条。")
+  },
+  /**
    * 置顶
    */
   stickFn(index) {

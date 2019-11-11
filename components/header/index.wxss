@@ -15,8 +15,8 @@
   z-index: 2;
 }
 .l-like{
-  width: 160rpx;
-  height: 160rpx;
+  width: 80rpx;
+  height:60rpx;
 }
 .placeholder-view {
   width: 100%;

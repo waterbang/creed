@@ -1,14 +1,28 @@
 <!--pages/help/help.wxml-->
-<l-message l-class="message"  />
-<view class="container">
-<view class="list">
- <l-list gap="{{30}}" title="清空缓存"bind:lintap="clearCache"   desc="当您遇到奇奇怪怪的问题的时候点击清空缓存" 
- icon="time"  tagShape="circle" tag-position="right"/>
-</view>
-<view class="help-text">
-<view>如果您在使用过程中发现一些BUG</view>
-<view>您可以点击清空缓存，这样能做到数据的同步</view>
-<view>如果您未解决问题，请电邮<l-tag shape="square">waterbang@qq.com</l-tag></view>
-</view>
+<l-message l-class="message" />
 
+
+<view class="container">
+  <view class="help-assist">
+    <view class="title">使用指难♐</view>
+    <view class="text-conater">
+     <view>1.这个小程序可以将您的承诺变成信条发送给别人。</view>
+      <view>2.所有列表支持下拉刷新.</view>
+      <view>3.双击草稿或已完成的信条可以删除哦</view>
+      <view>4.不用填信条码也可以用分享来发送给朋友。</view>
+       <view>5.想请我喝奶茶，但是我现在不想喝？给我发条信条吧！在我想喝的时候找你兑现~ </view>
+    </view>
+  </view>
+  <view class="help-text">
+      <view class="title">曲曲曲曲曲线救国指南♓</view>
+    <view class="text-conater">
+      <view>如果您在使用过程中发现一些BUG</view>
+      <view>您可以点击清空缓存，这样能做到数据的同步</view>
+      <view>如果您未解决问题，或是有什么提议</view>
+      <view>求求你了，请电邮waterbang@qq.com</view>
+    </view>
+  </view>
 </view>
+  <view class="list">
+    <l-list gap="{{30}}" title="清空缓存" bind:lintap="clearCache" desc="当您遇到奇奇怪怪的问题的时候点击清空缓存" icon="time" tagShape="circle" tag-position="right" />
+  </view>

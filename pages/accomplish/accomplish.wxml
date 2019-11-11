@@ -5,8 +5,8 @@
     <v-header cache="{{items}}" bind:popState="popState"></v-header>
      <view class='placeholder-view'></view>
       <view class="item-Body">
-        <view wx:for="{{items}}" wx:key="{{items._id}}" wx:if="{{!(items=='')}}">
-          <v-item items="{{items[index]}}" my="{{false}}" index="{{index}}"  bind:popState="popState"></v-item>
+        <view wx:for="{{items}}" wx:key="unique" wx:if="{{!(items=='')}}">
+          <v-item items="{{items[index]}}" my="{{false}}" index="{{index}}"  bind:popState="popState" bind:delectItem="delectItem"></v-item>
         </view>
 
         <view class="no-item" wx:if="{{items==''}}">

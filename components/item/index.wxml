@@ -1,13 +1,13 @@
 <!--components/item/index.wxml-->
-<view class="item" bind:tap="clickDialogState">
-  <l-slide-view height="140" width="750" slide-width="340" disabled="{{my&&_lock!==4}}" auto-close="true" >
+<view class="item" bind:tap="clickDialogState" >
+  <l-slide-view height="140" width="750" slide-width="340" disabled="{{my&&_lock!==4}}" auto-close="true"  >
     <view slot="left" class="left">
       <view class='left-con'>
         <view class='left-title'>
           <text class="left-main">{{items.title}}</text>
           <text class='left-time'>{{items.update_time}}</text>
         </view>
-        <text decode="true" class='left-by'>by&nbsp;{{items.lover}}</text>
+        <text decode="true" class='left-by'>by&nbsp;{{oneself?items.oneself:items.lover}}</text>
       </view>
     </view>
     <view slot="right" class="right">
@@ -45,4 +45,11 @@
   bind:linconfirm="reception"
   bind:lincancel="turnDown"
   />
+  <l-dialog 
+  show="{{delCard}}"
+  type="confirm"  
+  show-title="{{false}}"
+  content="是否删除此信条❗"
+  bind:lincancel="delState"
+  bind:linconfirm="delItem" />
 <v-addItem isUpdate="{{true}}" title="{{items.title}}" lover="{{items.lover}}" _id="{{items._id}}" state="{{showF}}" bind:upINData="upInThis"></v-addItem>

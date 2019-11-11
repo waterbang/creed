@@ -11,13 +11,21 @@ Page({
    * 清除缓存
    */
   clearCache(){
+    this._showSuccess('清除成功！')
     wx.clearStorage()
+  },
+  _showSuccess(content) {
+    wx.lin.showMessage({
+      type: 'success',
+      content: content,
+      duration: 2000,
+      icon: 'success'
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
   },
 
   /**

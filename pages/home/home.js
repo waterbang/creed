@@ -29,25 +29,26 @@ Page({
     avatar: 'avatar',
     avatar_text: 'avatar-text',
     header_grid: 'header-grid-show', //隐藏信条码
-    score:100,//信誉分
-    show_lover:false,//是否显示init
-    remindNum:0,//提醒的信条数量
-    itemNum:0,//总信条数
-    accomNum:0,//完成的信条数
-    timeout:0
+    score: 100, //信誉分
+    show_lover: false, //是否显示init
+    remindNum: 0, //提醒的信条数量
+    itemNum: 0, //总信条数
+    accomNum: 0, //完成的信条数
+    timeout: 0, //节流
   },
+
   /**
    * 点击header
    */
   clickHead() {
-    if (!this.data.alone){
+    if (!this.data.alone) {
       return
     }
-      clearTimeout(this.data.timeout)
-      this.data.timeout = setTimeout(()=>{
-        this.trigger()//重新绑定this
-      }, 500);
-    
+    clearTimeout(this.data.timeout)
+    this.data.timeout = setTimeout(() => {
+      this.trigger() //重新绑定this
+    }, 500);
+
   },
   /**
    * header动画
@@ -73,19 +74,19 @@ Page({
   /**
    * initFlag传过来的值
    */
-  closeLover(){
-    if (storage.all('lover')){
+  closeLover() {
+    if (storage.all('lover')) {
       this.setData({
         alone: storage.all('lover')
       })
     }
   },
   /**
-  * 初始化信条码
-  */
+   * 初始化信条码
+   */
   showInit() {
     this.setData({
-      show_lover:!this.data.show_lover
+      show_lover: !this.data.show_lover
     })
   },
   /**
@@ -98,42 +99,40 @@ Page({
   /**
    * 获取信条码
    */
-  async getFlag(){
-    if (storage.all('lover')){
-     this.setData({
-       alone: storage.all('lover')
-     })
-   }else{
+  async getFlag() {
+    if (storage.all('lover')) {
+      this.setData({
+        alone: storage.all('lover')
+      })
+    } else {
       let getFlag = await userModel.getMatchTheCode();
-     if(getFlag){
-
-      storage.add('lover', getFlag)
-       this.setData({
-         alone: getFlag
-       })
-     }
-   }
+      console.log(getFlag)
+      if (getFlag) {
+        storage.add('lover', getFlag)
+        this.setData({
+          alone: getFlag
+        })
+      }
+    }
   },
   /**
    * 获取提醒信条数量
    */
- async getRemindNum(){
-   let num;
-  
-
-     num = await homeModel.getRemind();
-     storage.add('remindNum', num)
-   if(num){
-     this.setData({
-       remindNum:num
-     })
-   }
-   return
+  async getRemindNum() {
+    let num;
+    num = await homeModel.getRemind();
+    storage.add('remindNum', num)
+    if (num) {
+      this.setData({
+        remindNum: num
+      })
+    }
+    return
   },
   /**
    * 总信条数
    */
-  async getItemNum(){
+  async getItemNum() {
     let num;
 
     if (storage.all('ItemNum')) {
@@ -150,8 +149,8 @@ Page({
     return
   },
   /**
-  * 完成信条数
-  */
+   * 完成信条数
+   */
   async getaAccomNum() {
     let num;
 
@@ -159,7 +158,7 @@ Page({
       num = storage.all('SucceedNum');
     } else {
       num = await homeModel.getSucceedNum();
-      storage.add('SucceedNum',num)
+      storage.add('SucceedNum', num)
     }
     if (num) {
       this.setData({
@@ -172,8 +171,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    wx.hideTabBar() //隐藏tarbar
     app.editTabbar();
-    this.getFlag();//初始化信条码
   },
 
   /**
@@ -187,9 +186,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.getRemindNum();//显示提醒的信条
+    this.getRemindNum(); //显示提醒的信条
     this.getItemNum();
     this.getaAccomNum();
+    this.getFlag(); //初始化信条码
   },
 
   /**
@@ -223,7 +223,15 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
-
-  }
+  onShareAppMessage: (e) => {
+    // 来自页面内转发按钮
+    let data = storage.all('share')
+    if (data) {
+      return {
+        title: data.title,
+        desc: data.oneself + "给您打了信条",
+        path: '/pages/list/list?id=' + data.id
+      }
+    }
+  },
 })

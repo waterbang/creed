@@ -31,7 +31,9 @@ Page({
     cache: false, //
     openPop: false,//打开发送栏
     lover: '',//填写的信条码
-    index: 1
+    index: 1,
+    isShare: false,
+    share:{}
   },
 
   /**
@@ -40,6 +42,47 @@ Page({
   onLoad: function (options) {
     app.editTabbar();
     this.showNewItem() //显示前10
+  },
+  /**
+* 监听拒绝后移除元素
+*/
+  delectItem(e) {
+    let newItem = this.data.items.splice(e.detail, 1);
+    if (newItem) {
+      this.setData({
+        items: this.data.items
+      })
+      storage.add(Item, this.data.items)
+    }
+
+    this._showSuccess("您删除了这个信条。")
+  },
+  /**
+   * 监听输入
+   */
+  setShare(value) {
+    if (value.detail.value) {
+      this.setData({
+        isShare: true
+      })
+    } else {
+      this.setData({
+        isShare: false
+      })
+    }
+  },
+  /**
+  * 回传分享
+  */
+  async sendShare(index) {
+    let _data = this.data.items[index];
+    if (_data._id) {
+      this.data.share={
+        id: _data._id,
+        oneself: _data.oneself,
+        title: _data.title
+      }
+    }
   },
   /**
    * 置顶
@@ -115,6 +158,7 @@ Page({
       this._showError("发生错误，请电邮管理员")
     }
     if (tag === 4) {   
+      this.sendShare(index)
       this.openPopup();//发送
       return
 
@@ -363,6 +407,13 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    let data = this.data.share;
+    if (data) {
+      return {
+        title: data.title,
+        desc: data.oneself + "给您打了信条",
+        path: '/pages/list/list?id=' + data.id
+      }
+    }
   }
 })

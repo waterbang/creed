@@ -54,10 +54,15 @@ Component({
    * 组件的方法列表
    */
   methods: {
+ 
     /**
  * 打开添加信条
  */
     showForm(event) {
+      if(!storage.all('lover')){
+        this._showError("请先到我的页面，初始化匹配码")
+        return
+      }
       this.setData({
         showF: !this.data.showF
       })
@@ -68,6 +73,15 @@ Component({
      */
     informList(){
       this.triggerEvent('formList')
-    }
+    },
+    _showError(content) {
+      wx.lin.showMessage({
+        type: 'warning',
+        content: content,
+        duration: 2000,
+        icon: 'warning'
+      })
+    },
+
   }
 })

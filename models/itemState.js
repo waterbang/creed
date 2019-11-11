@@ -44,20 +44,6 @@ upItemState(_id,lock){
   }).catch(err => {
     return err;
   })
-
-  // return db.collection('item').doc(_id)
-  //   .update({
-  //     data: {
-  //       lock: lock,
-  //       warn:false
-  //     }
-  //   })
-  //   .then(res => {
-  //     return res;
-  //   })
-  //   .catch(err => {
-  //     return err
-  //   })
 }
 /**
  * 发送
@@ -77,21 +63,58 @@ upItemState(_id,lock){
         return err
       })
   }
-/**
- * 更新like状态
+
+
+/*
+  *是否已分享
  */
-upLike(_id, state) {
-  return db.collection('item').doc(_id)
-    .update({
-      data: {
-        isLike: state
-      }
+examineShare(myId){
+  return db.collection('item')
+   .where({
+     _id: myId
+   })
+    .field({
+      lover:true
     })
+    .get()
     .then(res => {
-      return res;
+     if(res.data[0].lover){//如果有lvoer
+       return false
+     }else{
+       return true
+     }
     })
     .catch(err => {
       return err
+    })
+}
+/**
+ * 插入分享
+ */
+  addShare(_id, lover){
+    return wx.cloud.callFunction({
+      name: 'addShare',
+      data: {
+        _id: _id,
+        lover: lover,
+      }
+    }).then(res => {
+      return res;
+    }).catch(err => {
+      return err;
+    })
+}
+
+/**
+ * 删除信条
+ */
+deleteItem(_id){
+  return db.collection('item').doc(_id).remove()
+    .then(res=>{
+      return res;
+    })
+    .catch(err => {
+      return err;
     })
 }
 

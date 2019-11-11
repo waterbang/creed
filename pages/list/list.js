@@ -12,7 +12,7 @@ import {
 } from '../../config.js'
 const app = getApp();
 const Item = 'item';
-let stateModel = new ItemState();
+const stateModel = new ItemState();
 const itemModel = new ItemModel()
 const storage = new Storage()
 Page({
@@ -27,15 +27,48 @@ Page({
     pageIndex: 0, //当前索引叶数
     isEnd: true, //是否还有数据
     cache: false, //
-    index: 1
+    index: 1,
+    optionsId:''
   },
-
+ 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     app.editTabbar();
+    wx.hideTabBar()
     this.showNewItem() //显示前10
+
+    if(options.id){
+      this.data.optionsId = options.id
+    }
+  },
+  /**
+   * 获取分享
+   */
+ async getShate(id){
+   if(!id){
+     return
+   }
+   let haShate = await stateModel.examineShare(id);
+  if(!haShate){
+    this._showError("这个信条已经绑定成功了")
+    return
+  }
+   if (!storage.all('lover')){
+     this._showError("请先初始化匹配码再重新点击分享☺")
+     return
+   }
+   let result = await stateModel.addShare(id, storage.all('lover'))
+   console.log(result)
+   if(result){
+     this._showSuccess("获取分享成功！")
+     this.theLatest()
+     return
+   }else{
+     this._showError("获取分享失败" + result)
+     return
+   }
   },
   /**
    * 监听拒绝后移除元素
@@ -286,8 +319,9 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
-
+  onReady: function () {
+    wx.hideShareMenu()//隐藏转发按钮
+    this.getShate(this.data.optionsId)
   },
 
   /**
@@ -331,7 +365,15 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
-
-  }
+  onShareAppMessage: (e) => {
+    // 来自页面内转发按钮
+      let data = storage.all('share')
+      if (data) {
+        return {
+          title: data.title,
+          desc: data.oneself + "给您打了信条",
+          path: '/pages/list/list?id=' + data.id
+        }
+      }
+  },
 })

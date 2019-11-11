@@ -7,6 +7,7 @@ import {
 } from '../../models/myItem.js'
 const myItemModel = new MyItemModel()
 const storage = new Storage()
+ 
 Component({
   /**
    * 组件的属性列表
@@ -51,6 +52,9 @@ Component({
     lover: null,
     draft: false,
     tag:[],//lover标签
+    oneself: storage.all('lover'),
+    isShare:false,
+    _shareId:'',//分享的id
   },
 
   /**
@@ -68,10 +72,18 @@ Component({
     /**
      * 打开是否草稿
      */
-    ifDraft(e) {
-      this.setData({
-        draft: !this.data.draft
-      })
+    async ifDraft(e) {
+
+      if (this.verifyIsNull(false)) { //验证是否为空
+        return
+      }
+
+      let res = await this.checkContent(this.data.title);
+      if (res) {//验证是否有非法信息
+        this.setData({
+          draft: !this.data.draft
+        })
+      }
     },
     /**
      * 打开添加
@@ -84,43 +96,53 @@ Component({
     /**
      * 添加草稿
      */
-    addDraft() {
+    async addDraft(e) {
 
       if (this.verifyIsNull(false)) { //验证是否为空
         this.unWindow()
         return
       }
-      myItemModel.addItem(this.data.title, '')
-        .then(res => {
-          this.unWindow()
-          this._showSuccess("添加成功！")
+      let result = await myItemModel.addItem(this.data.title, '', this.data.oneself)
+        if(result){
+        try{
+          if (e.type == "lintap") {
+            this.unWindow()
+            this._showSuccess("添加成功，信条给您放在了草稿页面")
+          }
+        }catch(e){
+          
+        }
           this.triggerEvent('clickAdd')
-        })
-        .catch(err => {
+          return result;
+        }else{
           this._showError("添加失败！")
           throw new Error(err)
-        })
+        }
     },
 
     /**
      * 添加数据
      */
-    clickAdd() {
+    async clickAdd() {
+      this.setTag(this.data.lover);
+
       if (this.verifyIsNull(true)) { //验证是否为空
         return
       }
+      let res = await this.checkContent(this.data.title);
+      if (!res) { //验证是否有非法信息
+        return
+      }
 
-      this.setTag(this.data.lover);
-      myItemModel.addItem(this.data.title, this.data.lover)
-        .then(res => {
+      let addData = await myItemModel.addItem(this.data.title, this.data.lover, this.data.oneself)
+      if (addData) {
           this._showSuccess("添加成功！")
           this.unWindow()
           this.triggerEvent('clickAdd')
-        })
-        .catch(err => {
+        } else{
           this._showError("添加失败！")
           throw new Error(err)
-        })
+        }
     },
 
     /**
@@ -144,7 +166,11 @@ Component({
      * tag问题
      */
     setTag(lover){
+      if(!lover){
+        return
+      }
       let tagArr=[];
+
       if(storage.all('tag')){
         tagArr = storage.all('tag');
         tagArr.unshift(lover);
@@ -157,7 +183,9 @@ Component({
         })
         return
       }
+      console.log("lover"+lover)
       tagArr.unshift(lover) ;
+
       storage.add('tag', tagArr)
     },
     /**
@@ -171,8 +199,18 @@ Component({
       if (this.data.draft) {
         this.ifDraft()
       }
+      if(this.data.isShare){
+        this.unShare()
+      }
     },
-
+    /**
+     * 确认分享弹窗
+     */
+    unShare(){
+        this.setData({
+          isShare: !this.data.isShare
+        })     
+    },
     /**
      * 验证是否为空
      */
@@ -192,13 +230,63 @@ Component({
       return false
 
     },
-
+    /**
+     * 回传分享
+     */
+   async sendShare(){
+     let res = await this.checkContent(this.data.value);
+     if (!res) { return}
+     let _data =  await this.addDraft();
+      if (_data){
+       storage.add('share',{
+         id: _data._id,
+         oneself: this.data.oneself,
+         title: this.data.title
+       })
+        this.unShare()
+     }
+    },
+    /**
+     * 马上分享
+     */
+    immediatelyShare(){
+       this.unWindow()
+    },
     getTitle(e) {
-      this.data.title = e.detail.value;
+        this.data.title = e.detail.value;
+      
     },
     getlover(e) {
       this.data.lover = e.detail.value; 
       this.data.tag.push(e.detail.value)
+    },
+    /**
+     * 检查是否有违禁词
+     */
+   async checkContent(con){
+     let check= await myItemModel.msgSecCheck(con);
+     if (!check) {
+       this._showError("包含违禁词！")
+       this.setData({
+         title: ''
+       })
+       return false
+     }
+     return true
+    },
+    /**
+     * 监听是否有输入
+     */
+    setShare(value){
+     if(value.detail.value){
+       this.setData({
+         isShareBtn: true
+       })
+     }else{
+       this.setData({
+         isShareBtn: false
+       })
+     }
     },
     _showSuccess(content) {
       wx.lin.showMessage({

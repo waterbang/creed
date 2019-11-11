@@ -63,7 +63,7 @@ Component({
         this._showError("设置信条码失败，不能为空！")
         return false
       }
-      let reg = /\w{3,10}/;
+      let reg = /.{3,10}/;
   
       if (!reg.test(data)){
         this._showError("需要大于3位，并小于10位！")
