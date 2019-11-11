@@ -5,7 +5,7 @@
     <tr>
       <td align="center" valign="middle">
          <img class="QR-img" style="height: 60px; width:60px"  
-         src="https://raw.githubusercontent.com/watebang/creed/master/images/creed.jpg" alt="5毛钱小程序">
+         src="https://raw.githubusercontent.com/watebang/creed/master/images/Creed.jpg" alt="5毛钱小程序">
         <p style="font-size:12px;">5毛钱小程序</p>
       </td>
     </tr>
