@@ -60,7 +60,7 @@ Page({
      return
    }
    let result = await stateModel.addShare(id, storage.all('lover'))
-   console.log(result)
+  
    if(result){
      this._showSuccess("获取分享成功！")
      this.theLatest()
@@ -81,8 +81,11 @@ Page({
       })
       storage.add('item', this.data.items)
     }
-
-    this._showSuccess("您拒绝了这个信条。")
+    wx.showToast({
+      title: '拒绝成功',
+      icon: 'success',
+      duration: 2000
+    })
   },
   /**
    * 置顶
@@ -163,10 +166,6 @@ Page({
     if (!this.data.isEnd) { //数据加载是否完成
       return
     }
-    // if (storage.all('item')) {
-    //   this._unEnd()
-    //   return
-    // }
     let lastData = await itemModel.pullRefresh(this.data.pageIndex += 10);
     if (lastData) {
       let newData = this.data.items.concat(lastData)
@@ -254,24 +253,13 @@ Page({
       this.data.newData.unshift(latest[this.data.index])
       return this.getNewData(latest[this.data.index], ++this.data.index)
     }
+  
     this._showSuccess("已经加载完全部最新数据！")
 
     return this.data.newData[0]
 
   },
-  /**
-   * 监听list更新消息
-   */
-  monitorInfo() {
-    let state = app.globalData.listState;
-
-    if (state) {
-      this._showSuccess("添加成功，请到我的信条里查看")
-      app.globalData.listInfo = false;
-    }
-    return
-  },
-
+ 
 
   /**
    * 是否可加载
@@ -328,8 +316,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.monitorInfo() //监听list更新
-
   },
 
   /**

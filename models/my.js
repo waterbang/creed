@@ -5,7 +5,6 @@ import {
   UserModel
 } from './user.js'
 const userModel = new UserModel()
-const openid = userModel.getOpenid();
 
 class MyModel {
   constructor() { }
@@ -13,6 +12,7 @@ class MyModel {
    * 信条
    */
   async showItem(lock, warn) {
+    let openid = await userModel.getOpenid()
     let lover = await userModel.getMatchTheCode();
     return db.collection('item').limit(10).where({
       _openid: openid,
@@ -32,7 +32,8 @@ class MyModel {
   /**
    * 上拉触底
    */
-  pullRefresh(pageIndex,lock,warn) {
+ async pullRefresh(pageIndex,lock,warn) {
+    let openid = await userModel.getOpenid()
     return db.collection('item')
       .where({
         lock: lock,
@@ -55,7 +56,8 @@ class MyModel {
   /**
   * 显示最新的数据
   */
-  theLatest(index, lock, warn) {
+ async theLatest(index, lock, warn) {
+    let openid = await userModel.getOpenid()
     return db.collection('item').limit(index).where({
       _openid: openid,
       warn: warn || false,

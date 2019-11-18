@@ -1,0 +1,62 @@
+/* pages/turn/turn.wxss */
+.loading-img{
+  width: 150rpx;
+  height: 150rpx;
+}
+
+.loading{
+    display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+
+.no-item{
+  margin-top:100rpx; 
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;/*水平主轴居中*/
+    align-items: center;/*垂直交叉轴居中*/
+}
+.no-item > text{
+  max-width:600rpx;
+}
+
+.placeholder-view {
+  width: 100%;
+  height: 100rpx;
+}
+
+.item-Body{
+  width: 100%;
+  overflow: hidden;
+}
+
+.pupop-content{
+  width: 100%;
+  height:600rpx;
+  background-color: white;
+    display: flex;
+  flex-direction: column;
+  justify-content: center;/*水平主轴居中*/
+    align-items: center;/*垂直交叉轴居中*/
+}
+.pupop-content > .popop-text{
+  margin: 80rpx 0;
+   display: flex;
+  flex-direction: column;
+  justify-content: center;/*水平主轴居中*/
+  align-items: center;/*垂直交叉轴居中*/
+}
+.popop-text text:last-child{
+  font-size: 14px;
+  color:#c8c8c8
+}
+.pupop-content .form-btn{
+  margin: 70rpx 0 180rpx 0;
+}
+
+.message{
+  z-index: 9999!important;
+}

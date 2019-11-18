@@ -34,7 +34,9 @@ Page({
     remindNum: 0, //提醒的信条数量
     itemNum: 0, //总信条数
     accomNum: 0, //完成的信条数
+    turnNum:0,//被拒
     timeout: 0, //节流
+    turnNum:0,//被拒绝的信条数
   },
 
   /**
@@ -89,24 +91,17 @@ Page({
       show_lover: !this.data.show_lover
     })
   },
-  /**
-   * 发布list更新消息
-   */
-  addCache() {
-    app.globalData.listState = true
-  },
 
   /**
    * 获取信条码
    */
-  async getFlag() {
+  async getFlagFn() {
     if (storage.all('lover')) {
       this.setData({
         alone: storage.all('lover')
       })
     } else {
       let getFlag = await userModel.getMatchTheCode();
-      console.log(getFlag)
       if (getFlag) {
         storage.add('lover', getFlag)
         this.setData({
@@ -168,6 +163,19 @@ Page({
     return
   },
   /**
+   * 被拒绝的数
+   */
+ async getTurnItemNum(){
+    let num;
+      num = await homeModel.getTurnItemNum();
+    if (num) {
+      this.setData({
+        turnNum: num
+      })
+    }
+    return
+  },
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
@@ -189,7 +197,8 @@ Page({
     this.getRemindNum(); //显示提醒的信条
     this.getItemNum();
     this.getaAccomNum();
-    this.getFlag(); //初始化信条码
+    this.getFlagFn(); //初始化信条码
+    this.getTurnItemNum(); //初始化被拒绝的
   },
 
   /**

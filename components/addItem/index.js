@@ -52,7 +52,7 @@ Component({
     lover: null,
     draft: false,
     tag:[],//lover标签
-    oneself: storage.all('lover'),
+    oneself: '',
     isShare:false,
     _shareId:'',//分享的id
   },
@@ -66,7 +66,8 @@ Component({
      */
     clickTag(e){
       this.setData({
-        lover: e.detail.name
+        lover: e.detail.name,
+         isShareBtn: true
       })
     },
     /**
@@ -77,7 +78,6 @@ Component({
       if (this.verifyIsNull(false)) { //验证是否为空
         return
       }
-
       let res = await this.checkContent(this.data.title);
       if (res) {//验证是否有非法信息
         this.setData({
@@ -102,6 +102,13 @@ Component({
         this.unWindow()
         return
       }
+
+      if (!storage.all('lover')) {
+        this._showError("请先清空缓存再试！")
+        return
+      }
+      this.data.oneself = storage.all('lover')
+
       let result = await myItemModel.addItem(this.data.title, '', this.data.oneself)
         if(result){
         try{
@@ -129,11 +136,16 @@ Component({
       if (this.verifyIsNull(true)) { //验证是否为空
         return
       }
+
       let res = await this.checkContent(this.data.title);
       if (!res) { //验证是否有非法信息
         return
       }
-
+      if (!storage.all('lover')){
+        this._showError("请先清空缓存再试！")
+        return
+      }
+      this.data.oneself = storage.all('lover')
       let addData = await myItemModel.addItem(this.data.title, this.data.lover, this.data.oneself)
       if (addData) {
           this._showSuccess("添加成功！")
@@ -183,7 +195,6 @@ Component({
         })
         return
       }
-      console.log("lover"+lover)
       tagArr.unshift(lover) ;
 
       storage.add('tag', tagArr)
@@ -217,7 +228,6 @@ Component({
     verifyIsNull(tag) {
       if (!this.data.title) {
         this._showError('未填入信条内容！')
-
         return true
       }
       if (tag) {
@@ -234,8 +244,14 @@ Component({
      * 回传分享
      */
    async sendShare(){
-     let res = await this.checkContent(this.data.value);
+
+     let res = await this.checkContent(this.data.title); //检查违禁词
      if (!res) { return}
+
+     if (!this.data.oneself){
+       this.data.oneself=storage.all('lover')
+     }
+
      let _data =  await this.addDraft();
       if (_data){
        storage.add('share',{
@@ -254,7 +270,6 @@ Component({
     },
     getTitle(e) {
         this.data.title = e.detail.value;
-      
     },
     getlover(e) {
       this.data.lover = e.detail.value; 
@@ -264,6 +279,12 @@ Component({
      * 检查是否有违禁词
      */
    async checkContent(con){
+
+     if(!con){
+       this._showError("内容不能为空！")
+       return
+     }
+
      let check= await myItemModel.msgSecCheck(con);
      if (!check) {
        this._showError("包含违禁词！")

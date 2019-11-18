@@ -124,10 +124,7 @@ Page({
     if (!this.data.isEnd) { //数据加载是否完成
       return
     }
-    // if (storage.all(Item)) {
-    //   this._unEnd()
-    //   return
-    // }
+
     let lastData = await myModel.pullRefresh(this.data.pageIndex += 10, State,true);
     if (lastData) {
       let newData = this.data.items.concat(lastData)

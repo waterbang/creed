@@ -95,6 +95,17 @@ Component({
         delCard: !this.data.delCard
       })
     },
+    turnDel(lock){
+      if (lock === config.SUCCEED) {
+        this._showError('信条已经发送但对方还未接收，确定删除吗？')
+        return false
+      }
+      if (lock === config.LOCK){
+        this._showError('信条对方已经接收，不能删除！')
+        return true
+      }
+      return false
+    },
     /**
      * 是否打开dialog
      */
@@ -102,10 +113,9 @@ Component({
       this.data.dClick++;
       clearTimeout(this.data.timeout)
       this.data.timeout = setTimeout(() => {
-        if (this.data.dClick == 2) {
-          if (this.data.items.lock !== config.ACCOMPLISH && this.data.items.lock !== config.DRAFT) {
-            this._showError('只能删除草稿和已完成的哈~~')
-            return
+        if (this.data.dClick == 2) { //如果点击了两次
+          if (this.turnDel(this.data.items.lock)){
+            return 
           }
           this.delState()
 
@@ -145,7 +155,7 @@ Component({
      * 拒绝
      */
     async turnDown() {
-      let lock = await stateModel.upItemState(this.data.items._id, config.REJECT);
+      let lock = await stateModel.turnItemState(this.data.items._id, config.REJECT);
       if (lock) {
         this.triggerEvent('delectItem', this.data.index)
       }

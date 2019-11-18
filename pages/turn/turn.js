@@ -1,4 +1,4 @@
-// pages/draft/draft.js
+// pages/turn/turn.js
 import {
   MyModel
 } from '../../models/my.js'
@@ -12,8 +12,8 @@ import {
   config
 } from '../../config.js'
 const app = getApp();
-const Item = 'DRAFT';
-const State = 2;
+const Item = 'REJECT';
+const State = 3;
 let stateModel = new ItemState();
 const myModel = new MyModel()
 const storage = new Storage()
@@ -29,11 +29,11 @@ Page({
     pageIndex: 0, //当前索引叶数
     isEnd: true, //是否还有数据
     cache: false, //
+    index: 1, //索引
     openPop: false, //打开发送栏
+    isShare: false, //是否分享
     lover: '', //填写的信条码
-    index: 1,
-    isShare: false,
-    share: {}
+    share: {}, //分享数据
   },
 
   /**
@@ -44,8 +44,8 @@ Page({
     this.showNewItem() //显示前10
   },
   /**
-   * 监听拒绝后移除元素
-   */
+* 监听拒绝后移除元素
+*/
   delectItem(e) {
     let newItem = this.data.items.splice(e.detail, 1);
     if (newItem) {
@@ -55,34 +55,7 @@ Page({
       storage.add(Item, this.data.items)
     }
 
-    this._showSuccess("您删除了这个信条。")
-  },
-  /**
-   * 监听输入
-   */
-  setShare(value) {
-    if (value.detail.value) {
-      this.setData({
-        isShare: true
-      })
-    } else {
-      this.setData({
-        isShare: false
-      })
-    }
-  },
-  /**
-   * 回传分享
-   */
-  async sendShare(index) {
-    let _data = this.data.items[index];
-    if (_data._id) {
-      this.data.share = {
-        id: _data._id,
-        oneself: _data.oneself,
-        title: _data.title
-      }
-    }
+    this._showSuccess("您拒绝了这个信条。")
   },
   /**
    * 置顶
@@ -95,12 +68,12 @@ Page({
         items: this.data.items
       })
       storage.add(Item, this.data.items)
+      this._showSuccess("置顶成功!")
       return true
     }
     return false
 
   },
-
   /**
    * 提醒
    */
@@ -128,49 +101,30 @@ Page({
     }
     return false
   },
-
   /**
-   * 监听三个状态
+   * 发送
    */
-  popState(e) {
-    let index = e.detail.index,
-      tag = e.detail.tag;
-    this.data.index = index;
-    if (tag === 1) { //置顶
-      if (this.stickFn(index)) {
-        this._showSuccess("置顶成功@~@")
-        return
+  async sendLover() {
+    let send = await stateModel.sendItem(this.data.items[this.data.index]._id, this.data.lover);
+    if (send) {
+      let turnItem = this.data.items  //监听成功后移除视图item
+      let newItem = turnItem.splice(this.data.index,1)
+      if (newItem) { //更新视图
+        this.setData({
+          items: turnItem
+        })
       }
-      this._showError("发生错误，请电邮管理员")
-    }
-    if (tag === 2) { //提醒
-      if (this.warnFn(index)) {
-        this._showSuccess("提醒成功@^@")
-        return
-      }
-      this._showError("发生错误，请电邮管理员")
-    }
-    if (tag === 3) { //核销
-      if (this.cancelFn(index)) {
-        this._showSuccess("核销成功@v@")
-        return
-      }
-      this._showError("发生错误，请电邮管理员")
-    }
-    if (tag === 4) {
-      this.sendShare(index)
-      this.openPopup(); //发送
+      wx.showToast({
+        title: '发送成功',
+        icon: 'success',
+        duration: 2000
+      })
+      storage.add(Item, turnItem)
+      this.openPopup(); //关闭发送框
       return
-
     }
-    if (tag === 5) { //更新
-      let title = e.detail.title;
-      let sto = storage.all(Item);
-      sto[index].title = title;
-      storage.add(Item, sto)
-      return
-
-    }
+    this._showError("发送失败！");
+    return
   },
   /**
    * 获取信条码
@@ -182,7 +136,7 @@ Page({
    *打开发送
    */
   openPopup() {
-    if (!storage.all('lover')) {
+    if (!storage.all('lover')){
       this._showError("请先初始化信条码！");
       return
     }
@@ -191,31 +145,68 @@ Page({
     })
   },
   /**
-   * 发送
+   * 回传分享
    */
-  async sendLover() {
-    let send = await stateModel.sendItem(this.data.items[this.data.index]._id, this.data.lover);
-    if (send) {
-      wx.showToast({
-        title: '拒绝成功',
-        icon: 'success',
-        duration: 2000
-      })
-      //更新item的lover状态
+  async sendShare(index) {
+    let _data = this.data.items[index];
+    if (_data._id) {
+      this.data.share = {
+        id: _data._id,
+        oneself: _data.oneself,
+        title: _data.title
+      }
+    }
+  },
+  /**
+   * 监听输入
+   */
+  setShare(value) {
+    if (value.detail.value) {
       this.setData({
-        lover: this.data.lover
+        isShare: true
       })
-      //更新缓存状态
-      this.data.items.splice(this.data.index, 1);
-      storage.add(Item, this.data.items)
+    } else {
       this.setData({
-        items: this.data.items
+        isShare: false
       })
-      this.openPopup(); //发送
+    }
+  },
+  /**
+   * 监听三个状态
+   */
+  popState(e) {
+    let index = e.detail.index,
+      tag = e.detail.tag;
+    this.data.index = index;
+    if (tag === 1) {  //置顶
+      this.stickFn(this.data.index)
+    }
+    if(tag===5){
+      let title = e.detail.title;
+      let sto = storage.all(Item);
+      sto[index].title = title;
+      storage.add(Item, sto)
       return
     }
-    this._showSuccess("发送失败！");
-    return
+
+    if (tag === 4) {
+      if (this.data.items[this.data.index].lock === 1) {
+        this._showError('已经发送，不可再次发送！')
+        return
+      }
+      if (this.data.items[this.data.index].lock === 4) {
+        this._showError('对方已经锁定，不可再次发送！')
+        return
+      }
+      if (this.data.items[this.data.index].lock === 5) {
+        this._showError('该信条已经完成，不可再次发送！')
+        return
+      }
+      this.sendShare(this.data.index)
+      this.openPopup();//发送
+      return
+    }
+  
   },
   /**
    * 上拉触底
@@ -225,7 +216,6 @@ Page({
     if (!this.data.isEnd) { //数据加载是否完成
       return
     }
-
     let lastData = await myModel.pullRefresh(this.data.pageIndex += 10, State);
     if (lastData) {
       let newData = this.data.items.concat(lastData)
@@ -286,7 +276,6 @@ Page({
       })
     }
     storage.add(Item, this.data.items)
-
   },
   /**
    * 递归查看有几条新数据
@@ -409,16 +398,17 @@ Page({
   },
 
   /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-    let data = this.data.share;
-    if (data) {
+  * 用户点击右上角分享
+  */
+  onShareAppMessage: function () {
+    let _data = this.data.share;
+
+    if (_data) {
       return {
-        title: data.title,
-        desc: data.oneself + "给您打了信条",
-        path: '/pages/list/list?id=' + data.id
+        title: _data.title,
+        desc: _data.oneself + "给您打了信条",
+        path: '/pages/list/list?id=' + _data.id
       }
     }
-  }
+  },
 })

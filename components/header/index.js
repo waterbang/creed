@@ -17,10 +17,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    cache:{
-      type:Object,
-      observer:function(newVal){
-        if(newVal){
+    cache: {
+      type: Object,
+      observer: function(newVal) {
+        if (newVal) {
           this.data.listData = newVal;
           this.data.list = newVal.map((item) => {
             return item.title
@@ -40,43 +40,70 @@ Component({
   data: {
     g_like: "",
     showP: false, //显示隐藏
-    list:[],//title
+    list: [], //title
     headItems: [], //视图层显示
-    listData:[],//总缓存
-    content:'',
-    value:''
+    listData: [], //总缓存
+    content: '',
+    value: ''
   },
   methods: {
-    popState(e){
-       let tag = e.detail.tag;
-      let index = this.data.listData.findIndex((item=>{
-        return item._id===this.data.headItems[e.detail.index]._id;
+    /**
+     * 监听拒绝后移除元素
+     */
+    delectItem(e) {
+
+      let newItem = this.data.headItems.splice(e.detail, 1);
+      if (newItem) {
+        this.setData({
+          headItems: this.data.headItems
+        })
+        storage.add(Item, this.data.headItems)
+      }
+
+      this._showSuccess("您移除了这个信条。")
+    },
+    popState(e) {
+      let tag = e.detail.tag;
+      let index = this.data.listData.findIndex((item => {
+        return item._id === this.data.headItems[e.detail.index]._id;
       }))
       if (tag === 1) { //置顶
-        this.triggerEvent('popState', { index:index, tag:1 })
+        this.triggerEvent('popState', {
+          index: index,
+          tag: 1
+        })
         let newItem = this.data.headItems.splice(e.detail.index, 1);
         let shift = this.data.headItems.unshift(newItem[0]);
         if (shift) {
           this.setData({
             headItems: this.data.headItems
           })
-        this._showSuccess("置顶成功")
+          this._showSuccess("置顶成功")
+        }
       }
-      }
-      if (tag === 2) {//提醒
-        this.triggerEvent('popState', { index: index, tag: 2})
+      if (tag === 2) { //提醒
+        this.triggerEvent('popState', {
+          index: index,
+          tag: 2
+        })
         this._showSuccess("提醒成功")
       }
-      if (tag === 3) {//核销
-        this.triggerEvent('popState', { index: index, tag: 3 })
+      if (tag === 3) { //核销
+        this.triggerEvent('popState', {
+          index: index,
+          tag: 3
+        })
         let newItem = this.data.headItems.splice(index, 1);
         this.setData({
           headItems: this.data.headItems
         })
         this._showSuccess("核销成功")
       }
-      if (tag === 4) {//发送
-        this.triggerEvent('popState', { index: index, tag: 4 })
+      if (tag === 4) { //发送
+        this.triggerEvent('popState', {
+          index: index,
+          tag: 4
+        })
         this._showSuccess("发送成功")
       }
     },
@@ -84,32 +111,32 @@ Component({
      * 搜索
      */
     searchItem(e) {
-    
+
       let val = e.detail.value;
-      
-      if(val){
-       this.data.headItems= this.data.listData.filter((item, index) => {
-           return item.title.indexOf(val) > -1;
+
+      if (val) {
+        this.data.headItems = this.data.listData.filter((item, index) => {
+          return item.title.indexOf(val) > -1;
         })
-     this.setData({
-       headItems: this.data.headItems
-     })
+        this.setData({
+          headItems: this.data.headItems
+        })
       }
     },
-  
+
     /**
-  * 显示搜索
-  */
+     * 显示搜索
+     */
     ifShowPopup() {
       this.setData({
-        showP:true
+        showP: true
       })
     },
-    offPop(){
+    offPop() {
       this.setData({
-        showP:false,
-        headItems:[],
-        value:''
+        showP: false,
+        headItems: [],
+        value: ''
       })
     },
 
@@ -127,8 +154,8 @@ Component({
         icon: 'warning'
       })
     },
-    },
+  },
 
-   
-  
+
+
 })

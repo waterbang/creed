@@ -36,11 +36,18 @@ Component({
     async getFlag(){
       let _flag = this.data.flag ;
 
+        
       if (!this.rulesFlag(_flag)){
         return 
       }
 
       let getFlag = await userModel.setMatchTheCode(_flag);
+
+      if(getFlag.errCode){
+        this._showError("已存在此信条码，请换一个😐")
+        return
+      }
+
       if(getFlag){
         this._showSuccess("设置信条码成功！")
         this.onFlag()

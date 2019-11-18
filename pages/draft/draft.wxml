@@ -31,7 +31,7 @@
       <l-btn class="add" type="success" bind:lintap="sendLover" >发送信条</l-btn>
       </view>
       <view wx:else>
-      <l-btn class="add"  open-type="share"   >分享</l-btn>
+      <l-btn class="add"  open-type="share"  bind:lintap="openPopup" >分享</l-btn>
       </view>
     </view>
     </view>

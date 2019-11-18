@@ -1,11 +1,11 @@
 import {
   db
 } from '../utils/database.js'
-import {
-  UserModel
-} from './user.js'
-const userModel = new UserModel()
-const openid = userModel.getOpenid();
+
+import{
+  Storage
+} from '../utils/storage.js'
+const storage = new Storage()
 
 class ItemState {
   constructor() {}
@@ -29,6 +29,7 @@ class ItemState {
   }
 
 
+
 /**
  * 更改状态
  */
@@ -45,15 +46,33 @@ upItemState(_id,lock){
     return err;
   })
 }
+  /**
+   * 拒接
+   */
+  turnItemState(_id, lock) {
+    return wx.cloud.callFunction({
+      name: 'turnItem',
+      data: {
+        _id: _id,
+        lock: lock,
+      }
+    }).then(res => {
+      return res;
+    }).catch(err => {
+      return err;
+    })
+  }
 /**
  * 发送
  */
   sendItem(_id, lover) {
+    let oneself = storage.all('lover')
     return db.collection('item').doc(_id)
       .update({
         data: {
           lover: lover,
-          lock:1
+          lock:1,
+          oneself: oneself
         }
       })
       .then(res => {

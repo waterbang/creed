@@ -29,7 +29,7 @@ Page({
     lover:'',//填写的信条码
     index:1,//索引
     isShare:false,
-    share: {},
+    share: {}, //分享数据
   },
   /**
    * 生命周期函数--监听页面加载
@@ -37,6 +37,20 @@ Page({
   onLoad: function (options) {
     app.editTabbar();
     this.showNewItem()//显示前10
+  },
+  /**
+ * 监听拒绝后移除元素
+ */
+  delectItem(e) {
+    let newItem = this.data.items.splice(e.detail, 1);
+    if (newItem) {
+      this.setData({
+        items: this.data.items
+      })
+      storage.add(MyItem, this.data.items)
+    }
+
+    this._showSuccess("您拒绝了这个信条。")
   },
   /**
    * 监听输入
@@ -87,7 +101,7 @@ Page({
           this._showError('该信条已经完成，不可再次发送！')
           return
         }
-        this.sendShare(this.data.index )
+        this.sendShare(this.data.index)
         this.openPopup();//发送
         return
       }
@@ -140,6 +154,10 @@ Page({
    *打开发送
    */
   openPopup(){
+    if (!storage.all('lover')) {
+      this._showError("请先初始化信条码！");
+      return
+    }
     this.setData({
       openPop:!this.data.openPop
     })
@@ -153,11 +171,6 @@ Page({
     if (!this.data.isEnd) {//数据加载是否完成
       return
     }
-    // if (storage.all(MyItem)) {
-    //   this._unEnd()
-    //   return
-    // }
-   
 
     let lastData = await myItemModel.pullRefresh(this.data.pageIndex += 10);
     if (lastData) {
@@ -251,19 +264,6 @@ Page({
 
   },
 
-  /**
-   * 监听list更新消息
-   */
-  monitorInfo() {
-    let state = app.globalData.listState;
-
-    if (state) {
-      this.theLatest()
-      app.globalData.listInfo = false;
-    }
-    return
-  },
-
 
   /**
    * 是否可加载
@@ -320,7 +320,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.monitorInfo()//监听list更新
   },
 
   /**

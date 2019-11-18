@@ -15,11 +15,12 @@ class UserModel {
   /**
    * 从缓存获取
    */
-  getOpenid() {
+ getOpenid() {
     if (!storage.all(this._openid)){
-      wx.cloud.callFunction({
+   return  wx.cloud.callFunction({
         name: 'getOpenid',
-        }).then(res =>{
+        })
+        .then(res =>{
           let id = res.result.openid;
           storage.add(this._openid,id)//存入缓存
           return id;
@@ -35,9 +36,10 @@ class UserModel {
   /**
  * 获取用户匹配码
  */
-  getMatchTheCode() {
-    return db.collection('users').where({
-      _openid: this.getOpenid() // 填入当前用户 openid
+  async getMatchTheCode() {
+    let openid = await this.getOpenid()
+     return  db.collection('users').where({
+       _openid: openid // 填入当前用户 openid
     })
       .field({
         lover: true
@@ -45,7 +47,11 @@ class UserModel {
       .limit(1)
       .get()
       .then(res => {
-        return res.data[0].lover;
+        if(!res.data){
+          return false
+        }else{
+          return res.data[0].lover;
+        }
       })
       .catch(err => {
         console.log("err" + err)
@@ -75,7 +81,6 @@ class UserModel {
         return err
       })
   }
-
 
 
 }

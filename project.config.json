@@ -34,6 +34,8 @@
 	"isGameTourist": false,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"qqappid": "1109952633",
+	"qqLibVersion": "1.8.0",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -99,6 +101,12 @@
 					"pathName": "pages/list/list",
 					"query": "id=4a741dc95dbd369300623d025190317b",
 					"scene": 1007
+				},
+				{
+					"id": -1,
+					"name": "pages/turn/turn",
+					"pathName": "pages/turn/turn",
+					"scene": null
 				}
 			]
 		}

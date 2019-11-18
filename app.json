@@ -6,7 +6,8 @@
     "pages/accomplish/accomplish",
     "pages/remind/remind",
     "pages/draft/draft",
-    "pages/help/help"
+    "pages/help/help",
+    "pages/turn/turn"
   ],
   "window": {
     "backgroundColor": "#ffffff",

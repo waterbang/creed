@@ -33,7 +33,8 @@
     <view class="body-list">
       <l-list    gap="{{30}}" url="/pages/myList/myList" title="我的信条" desc="您的所有信条" icon="user" />
       <l-list gap="{{30}}" url="/pages/accomplish/accomplish" title="已完成" desc="已完成的信条放这里" icon="success" />
-       <l-list gap="{{30}}" url="/pages/remind/remind" title="提醒的信条" desc="请尽快完成提醒的信条" icon="edit" badge-count="{{remindNum}}" badge-position="right"/>
+      <l-list gap="{{30}}" url="/pages/turn/turn" title="被拒绝的信条" desc="被拒绝的信条放这里" icon="close" badge-count="{{turnNum}}" badge-position="right"/>
+       <l-list gap="{{30}}" url="/pages/remind/remind" title="提醒的信条" desc="请尽快完成提醒的信条" icon="soud" badge-count="{{remindNum}}" badge-position="right"/>
       <l-list gap="{{30}}" url="/pages/draft/draft" title="草稿" desc="查看添加的草稿" icon="edit" />
        <l-list gap="{{30}}" url="/pages/help/help" title="帮助" desc="(～﹃～)~zZ" icon="help" />
     </view>
