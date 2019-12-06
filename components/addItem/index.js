@@ -52,9 +52,10 @@ Component({
     lover: null,
     draft: false,
     tag:[],//lover标签
-    oneself: '',
+    oneself: storage.all('lover'),
     isShare:false,
     _shareId:'',//分享的id
+    load:false,//是否加载
   },
 
   /**
@@ -76,6 +77,7 @@ Component({
     async ifDraft(e) {
 
       if (this.verifyIsNull(false)) { //验证是否为空
+        this.unForm()
         return
       }
       let res = await this.checkContent(this.data.title);
@@ -107,7 +109,7 @@ Component({
         this._showError("请先清空缓存再试！")
         return
       }
-      this.data.oneself = storage.all('lover')
+      this.showLover();
 
       let result = await myItemModel.addItem(this.data.title, '', this.data.oneself)
         if(result){
@@ -142,10 +144,8 @@ Component({
         return
       }
       if (!storage.all('lover')){
-        this._showError("请先清空缓存再试！")
-        return
+        this.showLover();
       }
-      this.data.oneself = storage.all('lover')
       let addData = await myItemModel.addItem(this.data.title, this.data.lover, this.data.oneself)
       if (addData) {
           this._showSuccess("添加成功！")
@@ -203,15 +203,17 @@ Component({
      * 关闭所有弹窗
      */
     unWindow() {
-      if (this.data._state) {
-        this.unForm()
-      }
-
       if (this.data.draft) {
         this.ifDraft()
       }
+      if (this.data._state) {
+        this.unForm()
+      }
       if(this.data.isShare){
         this.unShare()
+      }
+      if (this.data.load) {
+        this.loadState()
       }
     },
     /**
@@ -219,7 +221,7 @@ Component({
      */
     unShare(){
         this.setData({
-          isShare: !this.data.isShare
+          isShare: !this.data.isShare,
         })     
     },
     /**
@@ -244,13 +246,17 @@ Component({
      * 回传分享
      */
    async sendShare(){
-
+     this.loadState();
      let res = await this.checkContent(this.data.title); //检查违禁词
-     if (!res) { return}
-
+     if (!res) { 
+       this.loadState();
+       return
+       }
+     
      if (!this.data.oneself){
-       this.data.oneself=storage.all('lover')
+       this.showLover(); //显示信条码
      }
+
 
      let _data =  await this.addDraft();
       if (_data){
@@ -274,6 +280,16 @@ Component({
     getlover(e) {
       this.data.lover = e.detail.value; 
       this.data.tag.push(e.detail.value)
+    },
+    loadState(){
+      this.setData({
+        load: !this.data.load
+      })
+    },
+    showLover(){
+      this.setData({
+        oneself: storage.all('lover')
+      })
     },
     /**
      * 检查是否有违禁词

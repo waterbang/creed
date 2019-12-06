@@ -13,7 +13,7 @@
 
         <view class="no-item" wx:if="{{items==''}}">
           <text>别人给的信条放在这.</text>
-          <text>别人还未给你信条哦(。・∀・)ノ</text>
+          <text>(。・∀・)ノ</text>
            <text>如果您第一次进入，</text>
            <text>可以到帮助页面阅读玩转指南</text>
         </view>

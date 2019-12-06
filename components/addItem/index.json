@@ -4,6 +4,8 @@
     "l-popup": "../../miniprogram_npm/lin-ui/popup/index",
     "l-input": "../../miniprogram_npm/lin-ui/input/index",
     "l-tag": "../../miniprogram_npm/lin-ui/tag/index",
-    "l-message": "../../miniprogram_npm/lin-ui/message/index"
+    "l-message": "../../miniprogram_npm/lin-ui/message/index",
+    "l-loading": "../../miniprogram_npm/lin-ui/loading/index",
+    "l-mask": "../../miniprogram_npm/lin-ui/mask/index"
   }
 }

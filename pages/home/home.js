@@ -16,6 +16,7 @@ const userModel = new UserModel()
 const app = getApp();
 const common = new Common()
 const storage = new Storage()
+
 Page({
 
   /**
@@ -34,11 +35,11 @@ Page({
     remindNum: 0, //提醒的信条数量
     itemNum: 0, //总信条数
     accomNum: 0, //完成的信条数
-    turnNum:0,//被拒
+    turnNum: 0, //被拒
     timeout: 0, //节流
-    turnNum:0,//被拒绝的信条数
+    turnNum: 0, //被拒绝的信条数
+    stateSub: false, //用户是否订阅了消息
   },
-
   /**
    * 点击header
    */
@@ -46,6 +47,7 @@ Page({
     if (!this.data.alone) {
       return
     }
+   
     clearTimeout(this.data.timeout)
     this.data.timeout = setTimeout(() => {
       this.trigger() //重新绑定this
@@ -165,9 +167,9 @@ Page({
   /**
    * 被拒绝的数
    */
- async getTurnItemNum(){
+  async getTurnItemNum() {
     let num;
-      num = await homeModel.getTurnItemNum();
+    num = await homeModel.getTurnItemNum();
     if (num) {
       this.setData({
         turnNum: num
@@ -239,7 +241,8 @@ Page({
       return {
         title: data.title,
         desc: data.oneself + "给您打了信条",
-        path: '/pages/list/list?id=' + data.id
+        path: '/pages/list/list?id=' + data.id,
+        imageUrl: "http://qyimg.waterbang.top/share.png"
       }
     }
   },

@@ -407,7 +407,8 @@ Page({
       return {
         title: _data.title,
         desc: _data.oneself + "给您打了信条",
-        path: '/pages/list/list?id=' + _data.id
+        path: '/pages/list/list?id=' + _data.id,
+        imageUrl: "http://qyimg.waterbang.top/share.png"
       }
     }
   },

@@ -358,7 +358,8 @@ Page({
         return {
           title: data.title,
           desc: data.oneself + "给您打了信条",
-          path: '/pages/list/list?id=' + data.id
+          path: '/pages/list/list?id=' + data.id,
+          imageUrl:"http://qyimg.waterbang.top/share.png"
         }
       }
   },

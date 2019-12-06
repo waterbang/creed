@@ -1,48 +1,52 @@
 /* components/addItem/index.wxss */
-.form{
+
+.form {
   display: flex;
   flex-direction: column;
-  align-items:center;
-  justify-content:center;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   min-height: 1750rpx;
-  background-color: #ffffff;
+  background-color: #fff;
   border: 1px solid #f5f5f5;
   -webkit-box-shadow: 0px 3px 3px #c8c8c8;
   -moz-box-shadow: 0px 3px 3px #c8c8c8;
   box-shadow: 0px 3px 3px #c8c8c8;
   border-radius: 10rpx;
 }
-.form-title{
+
+.form-title {
   margin-bottom: 150rpx;
-   display: flex;
+  display: flex;
   flex-direction: column;
-  align-items:center;
-  justify-content:center;
+  align-items: center;
+  justify-content: center;
 }
-.form-title text:last-child{
+
+.form-title text:last-child {
   font-size: 14px;
-  color:#c8c8c8
+  color: #c8c8c8;
 }
 
-
-.form-btn{
+.form-btn {
   display: flex;
   flex-direction: row;
-  justify-content:space-around;
+  justify-content: space-around;
   margin-top: 100rpx;
 }
-.add{
+
+.add {
   margin-right: 30rpx;
 }
 
-.draft{
+.draft {
+  max-width: 70%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-   align-items:center;
-  justify-content:center;
- margin-bottom: 500rpx;
-  border: 1px solid #f5f5f5;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50%;
   -webkit-box-shadow: 0px 3px 3px #c8c8c8;
   -moz-box-shadow: 0px 3px 3px #c8c8c8;
   box-shadow: 0px 3px 3px #c8c8c8;
@@ -50,36 +54,57 @@
   background-color: white;
 }
 
-.draft-text{
-  margin: 40rpx 0;
-}
-
-.draft-main{
-  
-   display: flex;
+.draft-top{
+  display: flex;
   flex-direction: row;
-  align-items:center;
-  justify-content:center;
- 
+  align-items: center;
+  justify-content: center;
+  background-color: #eeee;
+  height: 150rpx;
+  width: 100%;
+  border-radius: 0 0 60px 60px;
+  box-shadow: inset 0 2px rgba(0, 0, 0, 0.075);
 }
 
-.draft-main > .add{
-  margin: 40rpx 10rpx;
+.draft-text {
+  margin: 80rpx 0 50rpx 0;
 }
 
-.message{
-  z-index: 9999!important;
+.draft-main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
-.box{
+.draft-main > .add {
+  margin: 80rpx 10rpx;
+}
+
+.message {
+  z-index: 9999 !important;
+}
+
+.box {
   height: 500rpx;
   width: 100%;
 }
 
-.form-tag{
+.form-tag {
   margin-top: 60rpx;
   display: flex;
   flex-direction: row;
   align-items: baseline;
   justify-content: space-around;
+}
+
+.addLoad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  color: #faf0e6;
+  font-size: 17px;
+  margin-bottom: 100%;
 }
