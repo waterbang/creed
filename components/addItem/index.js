@@ -56,6 +56,7 @@ Component({
     isShare:false,
     _shareId:'',//分享的id
     load:false,//是否加载
+    disLoad:false, //添加动画
   },
 
   /**
@@ -110,7 +111,6 @@ Component({
         return
       }
       this.showLover();
-
       let result = await myItemModel.addItem(this.data.title, '', this.data.oneself)
         if(result){
         try{
@@ -133,14 +133,17 @@ Component({
      * 添加数据
      */
     async clickAdd() {
+      this._disLoad() //添加加载动画
       this.setTag(this.data.lover);
 
       if (this.verifyIsNull(true)) { //验证是否为空
+        this._disLoad() //添加加载动画
         return
       }
 
       let res = await this.checkContent(this.data.title);
       if (!res) { //验证是否有非法信息
+        this._disLoad() //添加加载动画
         return
       }
       if (!storage.all('lover')){
@@ -155,6 +158,7 @@ Component({
           this._showError("添加失败！")
           throw new Error(err)
         }
+      this._disLoad() //添加加载动画
     },
 
     /**
@@ -290,6 +294,7 @@ Component({
       this.setData({
         oneself: storage.all('lover')
       })
+      this.data.oneself = storage.all('lover');
     },
     /**
      * 检查是否有违禁词
@@ -324,6 +329,11 @@ Component({
          isShareBtn: false
        })
      }
+    },
+    _disLoad(){ //添加加载动画
+      this.setData({
+        disLoad:!this.data.disLoad
+      })
     },
     _showSuccess(content) {
       wx.lin.showMessage({

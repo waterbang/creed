@@ -24,7 +24,7 @@
       <view wx:if="{{!isUpdate}}" class="form-btn">
         <l-btn class="add" type="warning" bind:lintap="ifDraft">我后悔了</l-btn>
         <view wx:if="{{isShareBtn}}">
-          <l-btn class="add" type="success" bind:lintap="clickAdd">打一条</l-btn>
+          <l-btn class="add" type="success" bind:lintap="clickAdd" loading="{{disLoad}}" disabled="{{disLoad}}">{{disLoad?"验证非法信息":"打一条"}}</l-btn>
         </view>
         <view wx:else>
           <l-btn class="add" bind:lintap="sendShare">分享</l-btn>

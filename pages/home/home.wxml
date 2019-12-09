@@ -9,7 +9,7 @@
     </view>
     <text wx:else class="{{avatar_text}} ">信条码：{{alone}}</text>
     <view class="{{header_grid}} header_grid_place">
-      <l-grid l-class="grid ">
+      <l-grid l-class="grid " bind:lintap="clickGrid">
         <l-grid-item l-grid-item-class="grid-item" key="one" slot="one">
           <view class="num">{{itemNum}}</view>
           <view class="text">总信条</view>

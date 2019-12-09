@@ -41,13 +41,40 @@ Page({
     stateSub: false, //用户是否订阅了消息
   },
   /**
+   * 点击宫格
+   */
+  clickGrid(e) {
+    const EM_PAGE = {
+      myList: 0,
+      accomplish: 1,
+      remind: 2,
+    }
+    const index = e.detail.index;
+    if (index === EM_PAGE.myList) {
+      wx.navigateTo({
+        url: '../myList/myList',
+      })
+    }
+    if (index === EM_PAGE.accomplish) {
+      wx.navigateTo({
+        url: '../accomplish/accomplish'
+      })
+    }
+    if (index === EM_PAGE.remind) {
+      wx.navigateTo({
+        url: '../remind/remind'
+      })
+    }
+
+  },
+  /**
    * 点击header
    */
   clickHead() {
     if (!this.data.alone) {
       return
     }
-   
+
     clearTimeout(this.data.timeout)
     this.data.timeout = setTimeout(() => {
       this.trigger() //重新绑定this

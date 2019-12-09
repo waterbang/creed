@@ -24,8 +24,10 @@ Component({
       type: Object,
       observer: function(newVal) {
         this.setData({
-          _lock: newVal.lock
+          _lock: newVal.lock,
+          _subscription: newVal.isLike
         })
+        this.data._subscription = newVal.isLike
       }
     },
     index: Number,
@@ -60,17 +62,81 @@ Component({
     sendImg: './images/chenggong.svg', //核销
     diSendImgUrl: "./images/fenxiang_LE.svg", //发送
     sendImgUrl: "./images/fenxiang.svg", //发送
+    subscriptionUrl: "./images/subscription.svg",
+    diSubscriptionUrl: "./images/subscription_LE.svg",
     showF: false,
-    creed: false,
-    timeout: 0,
-    dClick: 0,
-    delCard: false
+    creed: false, // 是否接收信条
+    timeout: 0, // 防抖时间
+    dClick: 0, // 用户点击信条的次数
+    delCard: false, //是否打开删除框
+    _subscription: false, // 是否已经订阅
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
+    /**
+     * 订阅消息
+     */
+    async getSubscription(){
+
+      if (this.data._subscription){
+        return
+      }
+
+      const _id = this.data.items._id;
+      const items = {
+        title: this.data.items.title,
+        userOpenid: this.data.items._openid,
+        time: this.data.items.update_time,
+      };
+      // 调用微信 API 申请发送订阅消息
+      wx.requestSubscribeMessage({
+        // 传入订阅消息的模板id，模板 id 可在小程序管理后台申请
+        tmplIds: ['b-RCn-07_V1cqizwlG0BVtpztrrVvvuJ8EhFBqyjn2I', 'TRpQIh8sc36_lmch8S1sim2T7fIE6o7Yg88HhZRYZcE','P0Wi4P2sQFKfbjE7UEeGNOKPHDykFvduWmER6o-rFBQ'],
+        success(res) {
+          // 申请订阅成功
+          if (res.errMsg === 'requestSubscribeMessage:ok') {
+             wx.cloud.callFunction({
+                name: 'subscribe',
+                data: {
+                  data: items,
+                  templateId: ['b-RCn-07_V1cqizwlG0BVtpztrrVvvuJ8EhFBqyjn2I', 'TRpQIh8sc36_lmch8S1sim2T7fIE6o7Yg88HhZRYZcE', 'P0Wi4P2sQFKfbjE7UEeGNOKPHDykFvduWmER6o-rFBQ'],
+                },
+              })
+              .then(() => {
+                wx.showToast({
+                  title: '订阅成功',
+                  icon: 'success',
+                  duration: 2000,
+                });
+              })
+              .catch(() => {
+                wx.showToast({
+                  title: '订阅失败',
+                  icon: 'success',
+                  duration: 2000,
+                });
+              });
+          }
+        },
+        fail(err){
+          wx.showToast({
+            title: '订阅失败',
+            icon: 'success',
+            duration: 2000,
+          });
+        }
+      });
+      let lock = await stateModel.subscriptionState(_id, true);
+       if(lock){
+         this.setData({
+           _subscription : true
+         })
+         this.data._subscription = true;
+       }
+    },
     /**
      * 确认删除
      */
@@ -175,7 +241,7 @@ Component({
         newData[this.data.index].lock = config.LOCK;
         storage.add(Item, newData);
         this._showSuccess('锁定成功！')
-
+        this.sendAccept();
       }
 
     },
@@ -196,6 +262,7 @@ Component({
         index: this.data.index,
         tag: 2
       })
+      this.sendRemind();
     },
     /**
      * 核销
@@ -205,6 +272,7 @@ Component({
         index: this.data.index,
         tag: 3
       })
+      this.sendAccomplish();
     },
     /**
      * 发送
@@ -243,6 +311,38 @@ Component({
         content: content,
         duration: 2000,
         icon: 'warning'
+      })
+    },
+    sendAccept(){
+      wx.cloud.callFunction({
+        name: 'sendAccept',
+        data: {
+          title: this.data.items.title,
+          time: this.data.items.update_time,
+          lover: this.data.items.lover,
+          _openid: this.data.items._openid,
+        },
+      })
+    },
+    sendAccomplish(){
+      wx.cloud.callFunction({
+        name: 'sendAccomplish',
+        data: {
+          title: this.data.items.title,
+          lover: this.data.items.lover,
+          _openid: this.data.items._openid,
+        },
+      })
+    },
+    sendRemind(){
+      wx.cloud.callFunction({
+        name: 'sendRemind',
+        data: {
+          title: this.data.items.title,
+          time: this.data.items.update_time,
+          lover: this.data.items.lover,
+          _openid: this.data.items._openid,
+        },
       })
     }
   }

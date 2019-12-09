@@ -32,6 +32,10 @@
         <image class="right-img" src="{{_lock!== 3&&_lock !== 2||my?diSendImgUrl:sendImgUrl}}" />
         <text>发送</text>
       </view>
+         <view  wx:if="{{!my||_lock!==4}}"  class="right-state" bind:tap="getSubscription">
+        <image  class="right-img" src="{{_subscription?diSubscriptionUrl:subscriptionUrl}}" />
+        <text>订阅</text>
+      </view>
     </view>
   </l-slide-view>
 </view>

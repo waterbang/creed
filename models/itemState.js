@@ -11,6 +11,23 @@ class ItemState {
   constructor() {}
 
   /**
+    * 订阅状态
+    */
+  subscriptionState(_id, warn = true) {
+    return db.collection('item').doc(_id)
+      .update({
+        data: {
+          isLike: warn
+        }
+      })
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return err
+      })
+  }
+  /**
    * 提醒对方
    */
   warnState(_id, warn=true) {
