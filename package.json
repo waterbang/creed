@@ -2,7 +2,7 @@
   "name": "xintiao",
   "dependencies": {
     "lin-ui": "^0.6.6",
-    "npm": "^6.12.0"
+    "npm": "^6.13.4"
   },
   "version": "0.0.1",
   "description": "Creed applet",
