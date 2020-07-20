@@ -1,13 +1,14 @@
 {
   "name": "xintiao",
   "dependencies": {
-    "lin-ui": "^0.6.6",
-    "npm": "^6.12.0"
+    "lin-ui": "^0.6.6"
   },
   "version": "0.0.1",
   "description": "Creed applet",
   "main": "app.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "npm": "^6.12.0"
+  },
   "scripts": {
     "test": "npm test"
   },

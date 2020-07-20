@@ -24,6 +24,7 @@ Component({
       type: Boolean,
       value: false,
       observer: function(newVal) {
+        console.log(newVal)
         this.unForm()
         if(storage.all('tag')){ //初始化tag
           let tag = storage.all('tag');

@@ -1,6 +1,6 @@
 <!--components/initFlag/index.wxml-->
 <l-message l-class="message" />
-<l-popup show="{{_show_flag}}">
+<l-popup show="{{_show_flag}}" style="{{_show_flag?'display:block;':'display:none;'}}">
   <view class="flag">
     <view class="flag-text">
       <text>
