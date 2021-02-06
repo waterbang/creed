@@ -1,116 +1,125 @@
 {
-	"description": "项目配置文件",
-	"cloudfunctionRoot": "functions/",
-	"packOptions": {
-		"ignore": []
-	},
-	"setting": {
-		"urlCheck": false,
-		"es6": true,
-		"enhance": true,
-		"postcss": true,
-		"minified": true,
-		"newFeature": true,
-		"coverView": true,
-		"nodeModules": true,
-		"autoAudits": true,
-		"uglifyFileName": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false
-	},
-	"compileType": "miniprogram",
-	"libVersion": "2.11.2",
-	"appid": "wxfb6f05cb017bdc99",
-	"projectname": "%E6%96%B0%E4%BF%A1%E6%9D%A1",
-	"debugOptions": {
-		"hidedInDevtools": []
-	},
-	"isGameTourist": false,
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"qqappid": "1109952633",
-	"qqLibVersion": "1.8.0",
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"currentL": -1,
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": 0,
-			"list": [
-				{
-					"id": 0,
-					"name": "pages/home/home",
-					"pathName": "pages/home/home",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/myList/myList",
-					"pathName": "pages/myList/myList",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/accomplish/accomplish",
-					"pathName": "pages/accomplish/accomplish",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/draft/draft",
-					"pathName": "pages/draft/draft",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/help/help",
-					"pathName": "pages/help/help",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 5,
-					"name": "pages/list/list",
-					"pathName": "pages/list/list",
-					"query": "id=4a741dc95dbd369300623d025190317b",
-					"scene": 1007
-				},
-				{
-					"id": -1,
-					"name": "pages/turn/turn",
-					"pathName": "pages/turn/turn",
-					"scene": null
-				}
-			]
-		}
-	}
+  "description": "项目配置文件",
+  "cloudfunctionRoot": "functions/",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": true,
+    "autoAudits": true,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "enableEngineNative": false,
+    "bundle": false,
+    "useIsolateContext": true,
+    "useCompilerModule": false,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.11.2",
+  "appid": "wxfb6f05cb017bdc99",
+  "projectname": "%E6%96%B0%E4%BF%A1%E6%9D%A1",
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "qqappid": "1109952633",
+  "qqLibVersion": "1.8.0",
+  "condition": {
+    "search": {
+      "list": []
+    },
+    "conversation": {
+      "list": []
+    },
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "currentL": -1,
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": 0,
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/myList/myList",
+          "pathName": "pages/myList/myList",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/accomplish/accomplish",
+          "pathName": "pages/accomplish/accomplish",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/draft/draft",
+          "pathName": "pages/draft/draft",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/help/help",
+          "pathName": "pages/help/help",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 5,
+          "name": "pages/list/list",
+          "pathName": "pages/list/list",
+          "query": "id=4a741dc95dbd369300623d025190317b",
+          "scene": 1007
+        },
+        {
+          "id": -1,
+          "name": "pages/turn/turn",
+          "pathName": "pages/turn/turn",
+          "scene": null
+        }
+      ]
+    }
+  }
 }

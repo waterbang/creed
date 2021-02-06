@@ -1,7 +1,39 @@
 //app.js
 App({
-  onLaunch: function() {
-  
+  onLaunch: function () {
+    // 版本更新------
+    const updateManager = wx.getUpdateManager();
+    // 强制更新
+    updateManager.onCheckForUpdate(function (res) {
+      // 请求完新版本信息的回调
+      // console.log(res.hasUpdate)
+      if (!res.hasUpdate) {
+        //  console.log('---版本无更新---');
+      }
+    });
+    // 更新完成
+    updateManager.onUpdateReady(function () {
+      wx.showModal({
+        title: '更新提示',
+        content: '新版本已经准备好，是否重启应用？',
+        success: function (res) {
+          if (res.confirm) {
+            // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+            updateManager.applyUpdate()
+          }
+        }
+      })
+
+    });
+    // 更新失败
+    updateManager.onUpdateFailed(function () {
+      // 新的版本下载失败
+      wx.showToast({
+        title: '更新失败',
+        icon: 'none',
+        duration: 2000
+      })
+    });
     //隐藏系统tabbar
     wx.hideTabBar();
     //获取设备信息
@@ -9,7 +41,7 @@ App({
 
     this.initDb
   },
- 
+
   globalData: {
     userInfo: null,
   },
@@ -28,7 +60,7 @@ App({
     wx.getSystemInfo({
       success: function (res) {
         t.globalData.systemInfo = res;
-        t.globalData.listState= false
+        t.globalData.listState = false
       }
     });
   },
@@ -53,14 +85,13 @@ App({
     });
   },
   globalData: {
-    systemInfo: null,//客户端设备信息
+    systemInfo: null, //客户端设备信息
     userInfo: null,
     tabBar: {
       "backgroundColor": "#ffffff",
       "color": "#979795",
       "selectedColor": "#1c1c1b",
-      "list": [
-        {
+      "list": [{
           "pagePath": "/pages/list/list",
           "iconPath": "/tabbarComponent/icon/icon_home.png",
           "selectedIconPath": "/tabbarComponent/icon/icon_home_HL.png",

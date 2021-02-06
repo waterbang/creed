@@ -1,14 +1,16 @@
 <!--index.wxml-->
 
-<loadmore class="loadmore" show="{{_loading}}" type="{{isEnd?'loading':'end'}}" loading-text="努力加载中~" end-text="我是有底线的...(*￣０￣)ノ">
+<loadmore class="loadmore" show="{{_loading}}" type="{{isEnd?'loading':'end'}}" loading-text="努力加载中~"
+  end-text="我是有底线的...(*￣０￣)ノ">
   <view slot="content">
     <view class="container">
-     <v-header cache="{{items}}" my="{{false}}" bind:popState="popState"></v-header>
-        {{lover}}
-     <view class='placeholder-view'></view>
+      <v-header cache="{{items}}" my="{{false}}" bind:popState="popState"></v-header>
+      {{lover}}
+      <view class='placeholder-view'></view>
       <view class="item-Body">
         <view wx:for="{{items}}" wx:key="unique" wx:if="{{!(items=='')}}">
-      <v-item items="{{items[index]}}" index="{{index}}" my="{{false}}" newLover="{{lover}}" bind:delectItem="delectItem"  bind:popState="popState" ></v-item>
+          <v-item items="{{items[index]}}" index="{{index}}" my="{{false}}" newLover="{{lover}}"
+            bind:delectItem="delectItem" bind:popState="popState"></v-item>
         </view>
 
         <view class="no-item" wx:if="{{items==''}}">
@@ -19,21 +21,22 @@
   </view>
 </loadmore>
 <l-toast />
- <view class='placeholder-view'></view>
- <l-popup show="{{openPop}}" content-align="bottom"  >
-    <view class='pupop-content'>
+<view class='placeholder-view'></view>
+<l-popup show="{{openPop}}" content-align="bottom">
+  <view class='pupop-content'>
     <view class="popop-text">
       <text>可以不填匹配码直接分享哦🐈 </text>
       <text>（点击黑色部分可关闭）</text>
-   </view>
-     <l-input label="匹配码" placeholder="这里填要给的人的匹配码" value="{{lover}}" clear="{{true}}" bind:linblur="getlover" bind:lininput="setShare" />
-      <view  class="form-btn" >
-         <view wx:if="{{isShare}}">
-      <l-btn class="add" type="success" bind:lintap="sendLover" >发送信条</l-btn>
+    </view>
+    <l-input label="匹配码" placeholder="这里填要给的人的匹配码" value="{{lover}}" clear="{{true}}" bind:linblur="getlover"
+      bind:lininput="setShare" />
+    <view class="form-btn">
+      <view wx:if="{{isShare}}">
+        <l-btn class="add" type="success" bind:lintap="sendLover">发送信条</l-btn>
       </view>
       <view wx:else>
-      <l-btn class="add"  open-type="share"  bind:lintap="openPopup" >分享</l-btn>
+        <l-btn class="add" open-type="share" bind:lintap="openPopup">分享</l-btn>
       </view>
     </view>
-    </view>
+  </view>
 </l-popup>

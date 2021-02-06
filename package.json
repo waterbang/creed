@@ -1,9 +1,9 @@
 {
   "name": "xintiao",
   "dependencies": {
-    "lin-ui": "^0.6.6"
+    "lin-ui": "^0.8.13"
   },
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Creed applet",
   "main": "app.js",
   "devDependencies": {
