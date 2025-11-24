@@ -7,7 +7,7 @@
   "description": "Creed applet",
   "main": "app.js",
   "devDependencies": {
-    "npm": "^11.4.2"
+    "npm": "^11.6.2"
   },
   "scripts": {
     "test": "npm test"
